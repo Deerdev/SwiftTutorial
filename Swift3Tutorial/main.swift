@@ -8,5 +8,20 @@
 
 import Foundation
 
-print("Hello, World!")
 
+//print("Hello, World!")
+
+/// 1
+//basicDefination()
+
+/// 2
+//basicOperators()
+
+/// 3
+//stringAndCharacters()
+//unicodeTransform()
+
+/// 4
+//arraryInfo()
+//setInfo()
+dictInfo()
