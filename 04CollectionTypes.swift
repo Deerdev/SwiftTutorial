@@ -209,6 +209,13 @@ func dictInfo() -> Void {
         print("Airport name: \(value)")
     }
     
+    /// 取出Key和Value作为数组(转为Array类型)
+    let keys = [String](airPorts.keys)
+    let values = [String](airPorts.values)
+    
+    /// 排序(针对key或value排序)
+//    airPorts.sorted(by: <#T##((key: String, value: String), (key: String, value: String)) -> Bool#>)
+    
 }
 
 

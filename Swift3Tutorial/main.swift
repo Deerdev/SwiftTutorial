@@ -24,4 +24,7 @@ import Foundation
 /// 4
 //arraryInfo()
 //setInfo()
-dictInfo()
+//dictInfo()
+
+/// 5
+switchInfo()

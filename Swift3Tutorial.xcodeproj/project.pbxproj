@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		31252EE31E6DA5F4009E362B /* 04CollectionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31252EE21E6DA5F4009E362B /* 04CollectionTypes.swift */; };
+		318747451E6E388300729D7A /* 05ControlFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318747441E6E388300729D7A /* 05ControlFlow.swift */; };
+		31972C951E776D3A00AABEDB /* 06Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31972C941E776D3A00AABEDB /* 06Functions.swift */; };
 		31C49DF61E3F931B009EF85C /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C49DF51E3F931B009EF85C /* main.swift */; };
 		31C49DFD1E3F984C009EF85C /* 01Basics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C49DFC1E3F984C009EF85C /* 01Basics.swift */; };
 		31C49DFF1E40F510009EF85C /* 02BasicOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C49DFE1E40F510009EF85C /* 02BasicOperators.swift */; };
@@ -28,6 +30,8 @@
 
 /* Begin PBXFileReference section */
 		31252EE21E6DA5F4009E362B /* 04CollectionTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 04CollectionTypes.swift; sourceTree = "<group>"; };
+		318747441E6E388300729D7A /* 05ControlFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 05ControlFlow.swift; sourceTree = "<group>"; };
+		31972C941E776D3A00AABEDB /* 06Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 06Functions.swift; sourceTree = "<group>"; };
 		31C49DF21E3F931B009EF85C /* Swift3Tutorial */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Swift3Tutorial; sourceTree = BUILT_PRODUCTS_DIR; };
 		31C49DF51E3F931B009EF85C /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		31C49DFC1E3F984C009EF85C /* 01Basics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 01Basics.swift; sourceTree = "<group>"; };
@@ -49,6 +53,8 @@
 		31C49DE91E3F931B009EF85C = {
 			isa = PBXGroup;
 			children = (
+				31972C941E776D3A00AABEDB /* 06Functions.swift */,
+				318747441E6E388300729D7A /* 05ControlFlow.swift */,
 				31252EE21E6DA5F4009E362B /* 04CollectionTypes.swift */,
 				31C49E001E40FA80009EF85C /* 03StringsAndCharacters.swift */,
 				31C49DFE1E40F510009EF85C /* 02BasicOperators.swift */,
@@ -133,7 +139,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				31252EE31E6DA5F4009E362B /* 04CollectionTypes.swift in Sources */,
+				31972C951E776D3A00AABEDB /* 06Functions.swift in Sources */,
 				31C49DFD1E3F984C009EF85C /* 01Basics.swift in Sources */,
+				318747451E6E388300729D7A /* 05ControlFlow.swift in Sources */,
 				31C49DF61E3F931B009EF85C /* main.swift in Sources */,
 				31C49DFF1E40F510009EF85C /* 02BasicOperators.swift in Sources */,
 				31C49E011E40FA80009EF85C /* 03StringsAndCharacters.swift in Sources */,
