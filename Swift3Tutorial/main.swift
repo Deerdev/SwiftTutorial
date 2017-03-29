@@ -27,4 +27,5 @@ import Foundation
 //dictInfo()
 
 /// 5
-switchInfo()
+//switchInfo()
+testMultiply()
