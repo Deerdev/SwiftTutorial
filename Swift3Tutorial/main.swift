@@ -18,7 +18,7 @@ import Foundation
 //basicOperators()
 
 /// 3
-//stringAndCharacters()
+stringAndCharacters()
 //unicodeTransform()
 
 /// 4
@@ -28,4 +28,4 @@ import Foundation
 
 /// 5
 //switchInfo()
-testMultiply()
+//testMultiply()

@@ -99,6 +99,36 @@ func stringAndCharacters() -> Void {
     if hello.hasSuffix("lo") {
         print("hello 有后缀 'lo'")
     }
+    
+    
+    /// 字符串切片
+    let mixStr = "Swift 3.0 is interesting!"
+    let swiftView = mixStr.characters.suffix(12).dropLast()
+    // 先用suffix截掉了头部的"Swift 3.0 is"，再用dropLast方法去掉了末尾的“!”
+    // 此时，对mixStr.characters的操作，得到的是一个String.CharacterView对象，需要用这个view，生成一个新的String
+    String(swiftView) // swiftView = interesting
+    let strViews = mixStr.characters.split(separator: " ") // String.CharacterView集合
+    
+    // 用map方法把每集合中的每一个view都生成一个新的String对象，最后，就得到了一个包含每一个子串的数组Array<String>
+    let strList = strViews.map(String.init) // // ["Swift", "3.0", "is", "interesting!"]
+    print(strViews)
+    print(strList)
+    
+    /// 使用closure来分割
+    var i = 0
+    let singleCharViews = mixStr.characters.split { _ in
+        if i > 0 {
+            i = 0
+            return true
+        }
+        else {
+            i += 1
+            return false
+        }
+    }
+    
+    singleCharViews.map(String.init)
+    // ["S", "i", "t", "3", "0", "i", " ", "n", "e", "e", "t", "n", "!"]
 }
 
 
@@ -130,9 +160,25 @@ func unicodeTransform() -> Void {
         print("\(scalar.value)", terminator:" ")
     }
     print("")
+    
+
+    
 }
 
-
+/// 让String支持下标操作(不可取)
+// *** 但是该方法是O(n^2)的，容易造成性能隐患
+// 让String支持[]并不是一个好主意
+extension String {
+    subscript(index: Int) -> Character {
+        guard let index = self.index(startIndex,
+                                     offsetBy: index, limitedBy: endIndex) else {
+                                        
+                                        fatalError("String index out of range.")
+        }
+        
+        return self[index]
+    }
+}
 
 
 
