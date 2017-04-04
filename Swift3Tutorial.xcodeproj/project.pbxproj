@@ -7,10 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		31116B721E90E7480011DC3A /* 14Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31116B711E90E7480011DC3A /* 14Initialization.swift */; };
+		31116B741E9101D90011DC3A /* 15Deinitialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31116B731E9101D90011DC3A /* 15Deinitialization.swift */; };
+		31116B761E91027C0011DC3A /* 16AutomaticReferenceCounting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31116B751E91027C0011DC3A /* 16AutomaticReferenceCounting.swift */; };
 		311DBCBC1E8BE8FF00EF9732 /* 09ClassAndStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DBCBB1E8BE8FF00EF9732 /* 09ClassAndStruct.swift */; };
 		311DBCBE1E8BEBC800EF9732 /* 10Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DBCBD1E8BEBC800EF9732 /* 10Properties.swift */; };
 		311DBCC01E8C87F700EF9732 /* 11Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DBCBF1E8C87F700EF9732 /* 11Methods.swift */; };
 		31252EE31E6DA5F4009E362B /* 04CollectionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31252EE21E6DA5F4009E362B /* 04CollectionTypes.swift */; };
+		31468DE51E91102000E7B40C /* 17OptionalChaining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31468DE41E91102000E7B40C /* 17OptionalChaining.swift */; };
+		31468DE71E93E92300E7B40C /* 18ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31468DE61E93E92300E7B40C /* 18ErrorHandling.swift */; };
 		3157480B1E8DDBB2008FF38E /* 12Subscripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3157480A1E8DDBB2008FF38E /* 12Subscripts.swift */; };
 		316678161E87B4F0004B899B /* 08Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316678151E87B4F0004B899B /* 08Enumerations.swift */; };
 		3182F40D1E7B630600EC33B2 /* 07Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182F40C1E7B630600EC33B2 /* 07Closures.swift */; };
@@ -36,10 +41,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		31116B711E90E7480011DC3A /* 14Initialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 14Initialization.swift; sourceTree = "<group>"; };
+		31116B731E9101D90011DC3A /* 15Deinitialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 15Deinitialization.swift; sourceTree = "<group>"; };
+		31116B751E91027C0011DC3A /* 16AutomaticReferenceCounting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 16AutomaticReferenceCounting.swift; sourceTree = "<group>"; };
 		311DBCBB1E8BE8FF00EF9732 /* 09ClassAndStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 09ClassAndStruct.swift; sourceTree = "<group>"; };
 		311DBCBD1E8BEBC800EF9732 /* 10Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 10Properties.swift; sourceTree = "<group>"; };
 		311DBCBF1E8C87F700EF9732 /* 11Methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 11Methods.swift; sourceTree = "<group>"; };
 		31252EE21E6DA5F4009E362B /* 04CollectionTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 04CollectionTypes.swift; sourceTree = "<group>"; };
+		31468DE41E91102000E7B40C /* 17OptionalChaining.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 17OptionalChaining.swift; sourceTree = "<group>"; };
+		31468DE61E93E92300E7B40C /* 18ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 18ErrorHandling.swift; sourceTree = "<group>"; };
 		3157480A1E8DDBB2008FF38E /* 12Subscripts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 12Subscripts.swift; sourceTree = "<group>"; };
 		316678151E87B4F0004B899B /* 08Enumerations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 08Enumerations.swift; sourceTree = "<group>"; };
 		3182F40C1E7B630600EC33B2 /* 07Closures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 07Closures.swift; sourceTree = "<group>"; };
@@ -67,6 +77,11 @@
 		31C49DE91E3F931B009EF85C = {
 			isa = PBXGroup;
 			children = (
+				31468DE61E93E92300E7B40C /* 18ErrorHandling.swift */,
+				31468DE41E91102000E7B40C /* 17OptionalChaining.swift */,
+				31116B751E91027C0011DC3A /* 16AutomaticReferenceCounting.swift */,
+				31116B731E9101D90011DC3A /* 15Deinitialization.swift */,
+				31116B711E90E7480011DC3A /* 14Initialization.swift */,
 				31DD5B0A1E8DDE8600A720EF /* 13Inheritence.swift */,
 				3157480A1E8DDBB2008FF38E /* 12Subscripts.swift */,
 				311DBCBF1E8C87F700EF9732 /* 11Methods.swift */,
@@ -163,14 +178,19 @@
 				31972C951E776D3A00AABEDB /* 06Functions.swift in Sources */,
 				3182F40D1E7B630600EC33B2 /* 07Closures.swift in Sources */,
 				31C49DFD1E3F984C009EF85C /* 01Basics.swift in Sources */,
+				31468DE71E93E92300E7B40C /* 18ErrorHandling.swift in Sources */,
 				311DBCC01E8C87F700EF9732 /* 11Methods.swift in Sources */,
 				311DBCBC1E8BE8FF00EF9732 /* 09ClassAndStruct.swift in Sources */,
+				31116B721E90E7480011DC3A /* 14Initialization.swift in Sources */,
 				318747451E6E388300729D7A /* 05ControlFlow.swift in Sources */,
 				311DBCBE1E8BEBC800EF9732 /* 10Properties.swift in Sources */,
 				31C49DF61E3F931B009EF85C /* main.swift in Sources */,
+				31116B741E9101D90011DC3A /* 15Deinitialization.swift in Sources */,
 				31C49DFF1E40F510009EF85C /* 02BasicOperators.swift in Sources */,
+				31468DE51E91102000E7B40C /* 17OptionalChaining.swift in Sources */,
 				31DD5B0B1E8DDE8700A720EF /* 13Inheritence.swift in Sources */,
 				3157480B1E8DDBB2008FF38E /* 12Subscripts.swift in Sources */,
+				31116B761E91027C0011DC3A /* 16AutomaticReferenceCounting.swift in Sources */,
 				31C49E011E40FA80009EF85C /* 03StringsAndCharacters.swift in Sources */,
 				316678161E87B4F0004B899B /* 08Enumerations.swift in Sources */,
 			);

@@ -13,6 +13,8 @@ import Foundation
 func arraryInfo() -> Void {
     
     /// 数组定义Array<Element> || [Element]
+    // *** 值类型，不是引用 ***
+    
     // 空数组
     var someInts = [Int]()
     var someInts2: [Int] = []
@@ -32,8 +34,13 @@ func arraryInfo() -> Void {
     var threeDoubles = repeatElement(0.0, count: 3)
     // Array<Int>
     var threeInt = Array(repeating:22, count:3)
+    // [int]
+    var threeInt2 = [Int](repeating:22, count:3)
     print(threeDoubles)
     print(threeInt)
+    
+    // ** slice初始化 **
+    var twoInt = Array(threeInt[0...2])
     
     // (相同类型)数组相加
     var anotherThreeInt = Array(repeating: 33, count: 3)
@@ -66,6 +73,11 @@ func arraryInfo() -> Void {
     
     /// 插入
     stringList.insert("horse", at: 0)
+    // 在开始插入
+    stringList.insert("start", at: stringList.startIndex)
+    // 在结尾插入
+    stringList.insert("end", at: stringList.endIndex)
+    
     print(stringList) // ["horse", "egg", "dog", "cat", "cheese", "Butter"]
     // 其他插入方法
 //    stringList.insert(contentsOf: Collection, at: Int)
@@ -73,7 +85,7 @@ func arraryInfo() -> Void {
     /// 删除
     stringList.remove(at: 0)
     print(stringList) // ["egg", "dog", "cat", "cheese", "Butter"]
-    // 删除最后一项
+    // 删除最后一项（不能是 空数组）
     stringList.removeLast()
     print(stringList) // ["egg", "dog", "cat", "cheese"]
     // 删除最后两项
@@ -94,6 +106,13 @@ func arraryInfo() -> Void {
     // 遍历下标和值
     for (index, value) in stringList.enumerated() {
         print("Item \(String(index+1)): \(value)")
+    }
+    
+//    stringList.forEach{ str in
+//        print(str)
+//    }
+    stringList.forEach{
+        print($0)
     }
 }
 

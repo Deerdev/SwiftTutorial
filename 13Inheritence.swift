@@ -31,7 +31,9 @@ class Vehicle {
 }
 
 class Train: Vehicle {
+    // 重写
     override func makeNoise() {
+        // 调用父类
         super.makeNoise();
         
         print("Choo Choo")
