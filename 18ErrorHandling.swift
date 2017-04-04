@@ -31,7 +31,7 @@ enum VendingMachineError: Error {
 
 
 
-/// 用 throwing 函数传递错误
+/// 用 throwing 函数传递错误  Propagating Errors Using Throwing Functions
 // 只有 throwing 函数可以传递错误。任何在某个非 throwing 函数内部抛出的错误只能在函数内部处理
 struct Item {
     var price: Int
@@ -84,7 +84,7 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
 }
 
 
-/// 用 Do-Catch 处理错误
+/// 用 Do-Catch 处理错误 Handling Errors Using Do-Catch
 // “do-catch语句运行一段闭包代码来处理错误”
 /*
 do {
@@ -120,11 +120,12 @@ func doCatchFunc() {
 }
 
 
-/// 将错误转换成可选值
+/// 将错误转换成可选值 “Converting Errors to Optional Values”
 // *** 用try?通过将错误转换成一个可选值来处理错误，出错就返回 nil ***
 
 func someThrowingFunction() throws -> Int {
     // ...
+    return 0
 }
 
 func someThrowingFunctionNotThrows() {
@@ -139,7 +140,7 @@ func someThrowingFunctionNotThrows() {
 }
 
 
-/// 禁用错误传递
+/// 禁用错误传递 Disabling Error Propagation
 // try! : 该错误不会在运行时抛出
 // 运行时不会有错误抛出，所以适合禁用错误传递
 
@@ -148,7 +149,7 @@ let photo = try! loadImage("./Resources/John Appleseed.jpg")
 */
 
 
-/// 指定清理操作
+/// 指定清理操作 Specifying Cleanup Actions
 // *** 使用【defer】语句在即将离开当前代码块时执行一系列语句 ***
 // “defer语句将代码的执行延迟到当前的作用域退出之前”
 // “延迟执行的语句不能包含任何控制转移语句，例如break或是return语句，或是抛出一个错误”
