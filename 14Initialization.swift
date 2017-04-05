@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// 存储属性的初始赋值
+/// 1.存储属性的初始赋值
 // 当你给一个存储属性分配默认值，或者在一个初始化器里设置它的初始值的时候，属性的值就会被直接设置，*** 不会调用任何属性监听器 ***
 
 struct Fahrenheit1 {
@@ -16,7 +16,7 @@ struct Fahrenheit1 {
     var temperature = 32.0
 }
 
-/// 构造器
+/// 2.构造器
 // 使用 init 关键字来写
 
 struct Fahrenheit2 {
@@ -39,7 +39,7 @@ struct Celsius {
     }
 }
 
-/// 参数内部名称 和 外部名称
+/// 3.参数内部名称 和 外部名称
 // 如果你在定义构造器时没有提供参数的外部名字，Swift 会为构造器的每个参数自动生成一个跟内部名字相同的外部名。
 
 struct Color {
@@ -64,7 +64,7 @@ func testAgumentLabel() {
     let veryGreen = Color(red: 0.0, green: 1.0, blue: 0.0)
 }
 
-/// 无参数标签的构造器参数
+/// 4.无参数标签的构造器参数
 // 如果不想为构造器参数提供参数标签，可以用下划线( _ )来显示描述外部名称
 struct Celsius2 {
     var temperatureInCelsius: Double
@@ -81,12 +81,12 @@ struct Celsius2 {
 // 直接调用
 // let bodyTemperature = Celsius2(37.0)
 
-/// 初始化常量属性 “Assigning Constant Properties During Initialization”
+/// 5.初始化常量属性 “Assigning Constant Properties During Initialization”
 // *** 在构造过程中的 [任意时间点] 给常量属性指定一个值，只要在构造过程 [结束时] 是一个确定的值 ***
 // 一旦常量属性被赋值，它将永远不可更改。
 
 
-/// 默认构造器 Default Initializers
+/// 6.默认构造器 Default Initializers
 
 class ShoppingListItem0 {
     var name: String?
@@ -96,7 +96,7 @@ class ShoppingListItem0 {
 // 变量初始为默认值
 var item = ShoppingListItem0()
 
-/// 结构体逐一成员构造器
+/// 7.结构体逐一成员构造器
 // 只有结构体
 struct Size2 {
     var width = 0.0, height = 0.0
@@ -104,10 +104,11 @@ struct Size2 {
 let twoByTwo = Size2(width: 2.0, height: 2.0)
 
 
-/// 【值类型】的构造器代理 “Initializer Delegation for Value Types”
+/// 8.【值类型】的构造器代理 “Initializer Delegation for Value Types”
 // 在构造器内 调用其他构造器
 // *** 如果你为某个[值类型]定义了一个自定义的构造器，你将【无法】访问到默认构造器（如果是结构体，还将无法访问逐一成员构造器） ***
 // 这种限制可以防止你为值类型增加了一个额外的且十分复杂的构造器之后,仍然有人错误的使用自动生成的构造器 ***
+// 可以通过 扩展 定义，把自定义构造函数定义在扩展中，那么 默认构造器 和 自定义构造器 都可以使用 （链接21Extensions-4）
 
 struct Rect2 {
     var origin = Point()
@@ -130,13 +131,13 @@ struct Rect2 {
 
 // *****类*****
 
-/// 类的继承和初始化 “Class Inheritance and Initialization”
+/// 9. 类的继承和初始化 “Class Inheritance and Initialization”
 
-/// 指定构造器 Designated Initializers
+/// 10. 指定构造器 Designated Initializers
 // 指定构造器是类中最主要的构造器。一个指定构造器将初始化类中提供的所有属性，并根据父类链往上调用父类的构造器来实现父类的初始化。
 // 每个类至少得有一个指定构造器
 
-/// 便利构造器 Convenience Initializers
+/// 11.便利构造器 Convenience Initializers
 // 便利构造器是类中比较次要的、辅助型的构造器。你可以定义便利构造器来调用同一个类中的指定构造器，并为其参数提供默认值。
 // 你也可以定义便利构造器来创建一个特殊用途或特定输入值的实例。
 // 必要的时候为类提供便利构造器，比方说 某种情况下通过使用便利构造器来快捷调用某个指定构造器，能够节省更多开发时间并让类的构造过程更清晰明了。
@@ -170,14 +171,14 @@ class DCInitialization {
  
 **/
 
-/// 两段式构造过程 Two-Phase Initialization
+/// 12.两段式构造过程 Two-Phase Initialization
 // 第一个阶段，每个存储型属性被引入它们的类指定一个初始值。当每个存储型属性的初始值被确定后
 // 第二阶段开始，它给每个类一次机会，在新实例准备使用之前进一步定制它们的存储型属性
 
 // *** 便利构造器必须先代理调用同一类中的其它构造器，然后再为任意属性赋新值。如果没这么做，便利构造器赋予的新值将被同一类中其它指定构造器所覆盖 ***
 
 
-/// 构造器的继承和重写 “Initializer Inheritance and Overriding”
+/// 13.构造器的继承和重写 “Initializer Inheritance and Overriding”
 // “Swift 中的子类默认情况下不会继承父类的构造器”
 // *** 当你重写一个父类的指定构造器时，你总是需要写【override】修饰符 ***
 // 只重写父类的 指定构造器 ，因为便利构造器是横向的
@@ -200,7 +201,7 @@ class Bicycle: Vehicle1 {
 // ** 子类可以在初始化时修改继承来的变量属性，但是不能修改继承来的常量属性。 **
 
 
-/// 自动继承（父类）构造器 Automatic Initializer Inheritance
+/// 14.自动继承（父类）构造器 Automatic Initializer Inheritance
 
 /**
 - 规则1
@@ -250,7 +251,7 @@ class ShoppingListItem: RecipeIngredient {
 }
 
 
-/// 可失败构造器 Failable Initializers
+/// 15.可失败构造器 Failable Initializers
 // 其语法为在init关键字后面添加问号 (init?) ———— 可选类型
 // *** 可失败构造器的参数名和参数类型，不能与其它非可失败构造器的参数名，及其参数类型相同。 ***
 // 处理某些属性 不可赋空值 的情况
@@ -269,7 +270,7 @@ struct Animal {
 let anonymousCreature = Animal(species: "")
 
 
-/// 枚举类型的可失败构造器 Failable Initializers for Enumerations
+/// 16.枚举类型的可失败构造器 Failable Initializers for Enumerations
 enum TemperatureUnit {
     case Kelvin, Celsius, Fahrenheit
     init?(symbol: Character) {
@@ -287,7 +288,7 @@ enum TemperatureUnit {
     }
 }
 
-/// 带原始值的枚举类型的可失败构造器 Failable Initializers for Enumerations with Raw Values
+/// 17.带原始值的枚举类型的可失败构造器 Failable Initializers for Enumerations with Raw Values
 // 带原始值的枚举类型会【自带】一个可失败构造器 init?(rawValue:)
 enum TemperatureUnit2: Character {
     case Kelvin = "K", Celsius = "C", Fahrenheit = "F"
@@ -302,7 +303,7 @@ func enumTest() {
     }
 }
 
-/// 构造失败的传递 “Propagation of Initialization Failure”
+/// 18.构造失败的传递 “Propagation of Initialization Failure”
 // 类，结构体，枚举的可失败构造器可以横向代理到类型中的其他可失败构造器。
 // 类似的，子类的可失败构造器也能向上代理到父类的可失败构造器
 
@@ -324,7 +325,7 @@ class CartItem: Product {
     }
 }
 
-/// 重写一个可失败构造器 “Overriding a Failable Initializer”
+/// 19.重写一个可失败构造器 “Overriding a Failable Initializer”
 // “在子类中重写父类的可失败构造器”
 // 也可以用子类的[非可失败构造器]重写一个父类的[可失败构造器] (反之 不可)。这使你可以定义一个不会构造失败的子类，即使父类的构造器允许构造失败。
 
@@ -356,7 +357,7 @@ class AutomaticallyNamedDocument: Document {
     }
 }
 
-/// 可失败构造器 init! “The init! Failable Initializer”
+/// 20.可失败构造器 init! “The init! Failable Initializer”
 // 该可失败构造器将会构建一个对应类型的 [隐式解包] 可选类型的对象。
 
 // 你可以在init?中代理到init!，反之亦然。
@@ -364,7 +365,7 @@ class AutomaticallyNamedDocument: Document {
 // 你还可以用init代理到init!，不过，一旦init!构造失败，则会触发一个断言。
 
 
-/// 必要构造器 Required Initializers
+/// 21.必要构造器 Required Initializers
 // 【required】修饰符表明所有该类的子类都 必须 实现该构造器：
 class SomeRequireClass {
     required init() {
@@ -376,7 +377,7 @@ class SomeRequireClass {
 
 
 
-/// 通过闭包和函数来设置属性的默认值 “Setting a Default Property Value with a Closure or Function”
+/// 22.通过闭包和函数来设置属性的默认值 “Setting a Default Property Value with a Closure or Function”
 
 class SomeClosureClass {
     let someProperty: Int = {

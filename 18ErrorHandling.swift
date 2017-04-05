@@ -114,7 +114,7 @@ func doCatchFunc() {
     } catch VendingMachineError.InsufficientFunds(let coinsNeeded) {
         print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
     } catch {
-        // 处理其他Error
+        // *** 处理其他Error ***
         // 因为try可能存在unknown error，不仅仅是VendingMachineError类型的error
     }
 }
@@ -131,7 +131,7 @@ func someThrowingFunction() throws -> Int {
 func someThrowingFunctionNotThrows() {
     let x = try? someThrowingFunction()
     
-    var y: Int?
+    let y: Int?
     do {
         y = try someThrowingFunction()
     } catch {
@@ -141,7 +141,7 @@ func someThrowingFunctionNotThrows() {
 
 
 /// 禁用错误传递 Disabling Error Propagation
-// try! : 该错误不会在运行时抛出
+// 【try!】 : 该错误不会在运行时抛出
 // 运行时不会有错误抛出，所以适合禁用错误传递
 
 /*
