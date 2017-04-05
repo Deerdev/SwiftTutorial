@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// 1.协议定义
+/// 1.协议定义 Protocol Syntax
 
 protocol FirstProtocol {
     // protocol definition goes here
@@ -22,7 +22,7 @@ class SomeClass0: SomeSuperclass, FirstProtocol, AnotherProtocol {
     // class definition goes here
 }
 
-/// 2.属性要求
+/// 2.属性要求 Property Requirements
 // 协议只定义 属性名 、 属性类型、 可读可写； 不管是 存储型 还是 计算型
 // 总是使用 var 来声明属性
 protocol SomeProtocol {
@@ -60,7 +60,7 @@ class Starship: FullyNamed {
 }
 // *** ***
 
-/// 3.方法要求
+/// 3.方法要求 Method Requirements
 // 协议中的方法 不需要大括号和实现体
 // 方法参数不提供默认值
 // 实例方法  类方法
@@ -82,12 +82,14 @@ class LinearCongruentialGenerator: RandomNumberGenerator {
     
     // 实现协议定义的 实例方法
     func random() -> Double {
-        lastRandom = ((lastRandom * a + c) % m)
+        // lastRandom = ((lastRandom * a + c) % m)
+        // 浮点型的 取余，不能使用 %
+        lastRandom = ((lastRandom * a + c).truncatingRemainder(dividingBy:m))
         return lastRandom / m
     }
 }
 
-/// 4.Mutating 方法要求
+/// 4.Mutating 方法要求 Mutating Method Requirements
 // 需要在方法中 修改 方法所属的实例
 // 实现 协议中的 mutating 方法时，若是类类型，则不用写 mutating 关键字。而对于结构体和枚举，则必须写 mutating 关键字
 protocol Togglable {
@@ -109,7 +111,7 @@ enum OnOffSwitch: Togglable {
 }
 
 
-/// 5.构造器要求
+/// 5.构造器要求 Initializer Requirements
 // 协议可以要求遵循协议的类型实现 指定的构造器
 protocol SomeProtocol2 {
     init(someParameter: Int)
@@ -143,12 +145,12 @@ class SomeSubClass3: SomeSuperClass3, SomeProtocol3 {
     }
 }
 
-// 可失败构造器 要求
+// 可失败构造器 要求 Failable Initializer Requirements
 // 协议定义 可失败构造器 <---> 类实现方式（init?）或（init）
 // 协议定义 非失败构造器 <---> 类实现方式（init）或（init！）
 
 
-/// 6.协议作为类型
+/// 6.协议作为类型 Protocols as Types
 
 /* 
  * 协议作为类型：
@@ -173,7 +175,7 @@ class Dice {
     // generator 属性的类型为 RandomNumberGenerator，因此任何遵循了 RandomNumberGenerator 协议的类型的 实例 都可以赋值给 generator
 }
 
-/// 7.委托（代理）模式
+/// 7.委托（代理）模式 Delegation
 // 委托 是一种设计模式，它允许类或结构体将一些需要它们负责的功能 委托给其他类型的实例
 protocol DiceGame {
     var dice: Dice { get }
@@ -277,7 +279,7 @@ extension SnakesAndLadders: TextRepresentable {
     }
 }
 
-/// 9.通过扩展遵循协议
+/// 9.通过扩展遵循协议 “Adding Protocol Conformance with an Extension“
 // 某个类型 已经实现了协议的所有要求，直接通过扩展声明一下 协议 即可
 struct Hamster {
     var name: String
@@ -288,7 +290,7 @@ struct Hamster {
 extension Hamster: TextRepresentable {}
 
 
-/// 10.协议类型的集合
+/// 10.协议类型的集合 “Collections of Protocol Types”
 func protocolArray() {
     let game = SnakesAndLadders()
     let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
@@ -301,7 +303,7 @@ func protocolArray() {
     }
 }
 
-/// 11.协议的继承
+/// 11.协议的继承 Protocol Inheritance
 // 协议可以 继承 一个或多个 协议
 protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
     // protocol definition goes here
@@ -331,7 +333,7 @@ extension SnakesAndLadders: PrettyTextRepresentable {
 }
 
 
-/// 12.类 类型 专属协议
+/// 12.类 类型 专属协议 Class-Only Protocols
 // 在协议的继承列表中，通过添加【class】关键字来限制协议只能被类类型遵循，而结构体或枚举不能遵循该协议。
 // class 关键字必须第一个出现在协议的继承列表中
 
@@ -341,7 +343,7 @@ protocol SomeClassOnlyProtocol: class, InheritingProtocol {
 
 // *** 当协议定义的要求 需要遵循协议的类型 "必须是 引用语义" 而非值语义时，应该采用 类 类型专属协议 ***
 
-/// 13.协议合成
+/// 13.协议合成 Protocol Composition
 // 将多个协议采用 SomeProtocol & AnotherProtocol 这样的格式进行组合，称为 协议合成（protocol composition）
 
 protocol Named {
@@ -362,7 +364,7 @@ func wishHappyBirthday(to celebrator: Named & Aged) {
 //let birthdayPerson = Person(name: "Malcolm", age: 21)
 //wishHappyBirthday(to: birthdayPerson)
 
-/// 14.检查协议的一致性
+/// 14.检查协议的一致性 “Checking for Protocol Conformance”
 /**
  * is  用来检查实例是否符合某个协议，若符合则返回 true，否则返回 false。
  * as? 返回一个可选值，当实例符合某个协议时，返回类型为协议类型的可选值，否则返回 nil。
@@ -401,7 +403,7 @@ func checkProtocol() {
     // Something that doesn't have an area
 }
 
-/// 15.可选的协议要求
+/// 15.可选的协议要求 Optional Protocol Requirements
 // 遵循协议的类型，选择实现 协议要求的属性或方法
 // 兼容ObjectC使用，添加关键字【@objc】【optional】
 @objc protocol CounterDataSource {
@@ -424,8 +426,8 @@ class Counter {
     }
 }
 
-/// 16.协议扩展
-// 通过扩展 为协议添加 方法 属性，并实现方法的 默认实现
+/// 16.协议扩展 Protocol Extensions
+// 通过扩展 为协议添加 方法 属性，并实现方法的 默认实现（Providing Default Implementations）
 // 遵循该协议的类型，自动拥有这些方法，不用重新实现
 extension RandomNumberGenerator {
     // 定义新方法，并实现
@@ -437,7 +439,7 @@ extension RandomNumberGenerator {
 
 // *** 如果遵循协议的类 已经提供了 自定义实现，那么自定义实现会 覆盖协议的默认实现 ***
 
-/// 17.为协议扩展 添加限定条件
+/// 17.为协议扩展 添加限定条件 “Adding Constraints to Protocol Extensions”
 // 为扩展添加限定条件，只有“遵循协议的类型 满足 这些限制条件时”，才能获得协议扩展提供的默认实现。
 // 这些限制条件写在协议名之后，使用【where】子句来描述
 

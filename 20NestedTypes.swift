@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// 嵌套类型
+/// 1.嵌套类型
 
 struct BlackjackCard {
     
@@ -58,7 +58,7 @@ func nestedTypeTest() {
     print("theAceOfSpades: \(theAceOfSpades.description)")
     // Prints "theAceOfSpades: suit is ♠, value is 1 or 11"
     
-    /// 引用嵌套类型 “Referring to Nested Types”
+    /// 2.引用嵌套类型 “Referring to Nested Types”
     // “在嵌套类型的类型名前加上其外部类型的类型名作为前缀”
     let heartsSymbol = BlackjackCard.Suit.Hearts.rawValue
     // heartsSymbol is "♡"

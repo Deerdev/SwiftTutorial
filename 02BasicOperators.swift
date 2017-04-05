@@ -16,6 +16,7 @@ func basicOperators() -> Void {
     let x2 = -9 % 4
     // 1 (取余数的负号被忽略)
     let x3 = 9 % -4
+    
     // 可以对小数去除，x4 = 0.5，%号在swift3中被取消
     let x4 = 8.truncatingRemainder(dividingBy: 2.5)
     print("取余：x1=\(x1); x2=\(x2); x3=\(x3); x4=\(x4)")
