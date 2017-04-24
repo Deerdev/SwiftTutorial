@@ -59,6 +59,7 @@ func basicDefination() -> Void {
     // -**- 最多包含6个元素的Tuple变量进行比较，超过这个数量，Swift会报错
     
     
+    
     let possibleNumber = "123"
     /// convertedNumber是optional类型，因为返回Int()强制转换可能失败
     let convertedNumber = Int(possibleNumber)
@@ -68,11 +69,18 @@ func basicDefination() -> Void {
      *swift中的nil不是指针，是确定的值，任何值得可选状态都可以被置为nil
      *OC中的nil是指向一个不存在的对象
     ********/
+    
     var error404: Int? = 404
     
     if convertedNumber != nil {
         print("操作 convertedNumber")
     }
+    
+    // *** let使用前必须初始化，没有默认初始化
+    let optionNum1:Int?
+    // *** var变量默认初始化为nil
+    var optionNum2:Int?
+    
     
     /// 确定convertedNumber有值（必须非nil），使用"!"强制解析optional（转为非optional）
     var number = convertedNumber!
