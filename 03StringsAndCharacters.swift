@@ -151,7 +151,7 @@ func unicodeTransform() -> Void {
     
     /// unicode
     print("unicode(string):", terminator:" ")
-    for scalar in dogString.unicodeScalars {
+    for scalar in dogString.unicodeScalars {    // TODO: 待完善Unicode view的详解
         print("\(scalar)", terminator:" ")
     }
     print("")
@@ -159,7 +159,7 @@ func unicodeTransform() -> Void {
     for scalar in dogString.unicodeScalars {
         print("\(scalar.value)", terminator:" ")
     }
-    print("")
+    print("")   // FIXME: 应该修改的标记
     
 
     
