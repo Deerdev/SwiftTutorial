@@ -89,6 +89,9 @@ func arithmeticMean(_ numbers: Double...) -> Double {
 }
 
 /// 输入输出参数 In-Out Parameters
+/// inout不是对参数的引用，而是在函数执行结束后，再将结果写入到外部变量的内存中
+/// 不允许逃逸inout参数，可能逃逸闭包执行结束后，原始变量的内存已经不存在了
+
 // inout关键字，表示参数在函数内可被修改
 // 交换a,b之间的值
 func swapTwoInts(_ a: inout Int, _ b: inout Int) {

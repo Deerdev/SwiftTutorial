@@ -33,6 +33,7 @@
 		31C49DFF1E40F510009EF85C /* 02BasicOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C49DFE1E40F510009EF85C /* 02BasicOperators.swift */; };
 		31C49E011E40FA80009EF85C /* 03StringsAndCharacters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C49E001E40FA80009EF85C /* 03StringsAndCharacters.swift */; };
 		31DD5B0B1E8DDE8700A720EF /* 13Inheritence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD5B0A1E8DDE8600A720EF /* 13Inheritence.swift */; };
+		31E8118C1EC4459E00930169 /* 26GuardTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E8118B1EC4459E00930169 /* 26GuardTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -75,6 +76,7 @@
 		31C49DFE1E40F510009EF85C /* 02BasicOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 02BasicOperators.swift; sourceTree = "<group>"; };
 		31C49E001E40FA80009EF85C /* 03StringsAndCharacters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 03StringsAndCharacters.swift; sourceTree = "<group>"; };
 		31DD5B0A1E8DDE8600A720EF /* 13Inheritence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 13Inheritence.swift; sourceTree = "<group>"; };
+		31E8118B1EC4459E00930169 /* 26GuardTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 26GuardTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 		31C49DE91E3F931B009EF85C = {
 			isa = PBXGroup;
 			children = (
+				31E8118B1EC4459E00930169 /* 26GuardTest.swift */,
 				31468DF41E95C7B400E7B40C /* 25AdvancedOperators.swift */,
 				31468DF21E951C7100E7B40C /* 24AccessControl.swift */,
 				31468DF01E95045600E7B40C /* 23Generics.swift */,
@@ -216,6 +219,7 @@
 				31116B741E9101D90011DC3A /* 15Deinitialization.swift in Sources */,
 				31C49DFF1E40F510009EF85C /* 02BasicOperators.swift in Sources */,
 				31468DE51E91102000E7B40C /* 17OptionalChaining.swift in Sources */,
+				31E8118C1EC4459E00930169 /* 26GuardTest.swift in Sources */,
 				31DD5B0B1E8DDE8700A720EF /* 13Inheritence.swift in Sources */,
 				3157480B1E8DDBB2008FF38E /* 12Subscripts.swift in Sources */,
 				31116B761E91027C0011DC3A /* 16AutomaticReferenceCounting.swift in Sources */,

@@ -10,7 +10,7 @@ import Foundation
 
 func basicOperators() -> Void {
     
-    /// 取余
+    /// 1.取余
     let x1 = 9 % 4
     // -1
     let x2 = -9 % 4
@@ -21,7 +21,7 @@ func basicOperators() -> Void {
     let x4 = 8.truncatingRemainder(dividingBy: 2.5)
     print("取余：x1=\(x1); x2=\(x2); x3=\(x3); x4=\(x4)")
     
-    /// 元组比较
+    /// 2.元组比较
     if (3, "a") < (3, "b") {
         print("(3, \"a\") < (3, \"b\")")
     }
@@ -30,7 +30,7 @@ func basicOperators() -> Void {
     }
     
     
-    /// 空合运算符?? (nil coalescing operator)
+    /// 3.空合运算符 ?? (nil coalescing operator)
     var a: Int?
     // ??两边+空格
     //let x = a??2 ❌
@@ -50,5 +50,9 @@ func basicOperators() -> Void {
         print("\(index) times 5 is \(index * 4)")
     }
     
-    
+    /// 4.三目运算符
+    let xx = 10
+    xx > 5 ? print("big") : print("little")
+    // ()表示 "空处理"
+    xx > 3 ? print("big") : ()
 }

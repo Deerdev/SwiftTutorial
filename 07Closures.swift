@@ -10,7 +10,7 @@ import Foundation
 
 /// 闭包定义
 
-// parameters参数可以死inout参数，不能有默认值
+// parameters参数可以是inout参数，不能有默认值
 
 //{ (parameters) -> return type  in
 //    statements
@@ -156,7 +156,7 @@ func someClassTest() {
 /// 自动闭包 Autoclosures
 // 自动闭包是一种自动创建的闭包，用于包装传递给函数作为参数的表达式。
 // 这种闭包 “不接受任何参数”，当它被调用的时候，会返回被包装在其中的表达式的值。
-// 这种便利语法让你能够 省略 闭包的花括号，用一个普通的表达式来代替显式的闭包。
+// 这种便利语法让你能够 省略 闭包的“花括号”，用一个普通的表达式来代替显式的闭包。
 // 参数使用 @autocloseure 表示
 func autoClosureTest() {
     var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
@@ -167,7 +167,7 @@ func autoClosureTest() {
     serve(customer: customersInLine.remove(at: 0))
 }
 
-// 自动闭包 也可以 逃逸 参数加 @autoclosure @escaping 标识
+// 自动闭包 也可以 逃逸 ，参数加 @autoclosure @escaping 标识
 var customerProviders: [() -> String] = []
 func collectCustomerProviders(_ customerProvider: @autoclosure @escaping () -> String) {
     customerProviders.append(customerProvider)

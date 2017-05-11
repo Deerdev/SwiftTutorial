@@ -116,6 +116,36 @@ func switchInfo() -> Void {
     
 }
 
+/// if case语句
+func funcIfCase() {
+    enum Direction {
+        case north, south, east, west(abbr: String)
+    }
+    
+    let west = Direction.west(abbr: "W")
+    let west2 = Direction.west(abbr: "Q")
+    if case .west = west {
+        print(west) // west("W")
+    }
+    
+    if case .west = west2 {
+        print(west2) // west("W")
+    }
+    if case .west(let direction) = west {
+        print(direction) // W
+    }
+    
+    
+    /// 提取Optional的值
+    let skills: [String?] =
+        ["Swift", nil, "PHP", "JavaScirpt", nil]
+    
+    for case let skill? in skills {
+        print(skill) // Swift PHP JavaScript
+    }
+
+}
+
 /// Early Exit (guard语句)
 func guardTest() -> Void {
     var airPorts = ["YYZ": "Pearson", "DUB": "Dublin"]
