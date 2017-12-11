@@ -171,6 +171,7 @@ class weakClosure {
 // 相反，在被捕获的引用可能会变为 nil 时，定义一个【弱引用】的捕获 （弱引用 总是可选类型，在闭包内需要检查）
 // “如果被捕获的引用绝对不会变为nil，应该用无主引用，而不是弱引用”
 
+// ** unowned 类似assign，在对象释放后 不会被置为nil，而是成为野指针
 class HTMLElementSafe {
     
     let name: String

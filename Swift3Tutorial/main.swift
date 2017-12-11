@@ -29,3 +29,10 @@ stringAndCharacters()
 /// 5
 //switchInfo()
 //testMultiply()
+
+/// gcd
+let gcd = GCDBySwift()
+gcd.creaeQueue()
+
+
+
