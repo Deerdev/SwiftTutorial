@@ -72,7 +72,7 @@
 		3182F40C1E7B630600EC33B2 /* 07Closures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 07Closures.swift; sourceTree = "<group>"; };
 		318747441E6E388300729D7A /* 05ControlFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 05ControlFlow.swift; sourceTree = "<group>"; };
 		31972C941E776D3A00AABEDB /* 06Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 06Functions.swift; sourceTree = "<group>"; };
-		31C49DF21E3F931B009EF85C /* Swift3Tutorial */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Swift3Tutorial; sourceTree = BUILT_PRODUCTS_DIR; };
+		31C49DF21E3F931B009EF85C /* SwiftTutorial */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftTutorial; sourceTree = BUILT_PRODUCTS_DIR; };
 		31C49DF51E3F931B009EF85C /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		31C49DFC1E3F984C009EF85C /* 01Basics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 01Basics.swift; sourceTree = "<group>"; };
 		31C49DFE1E40F510009EF85C /* 02BasicOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 02BasicOperators.swift; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 		31C49DF31E3F931B009EF85C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				31C49DF21E3F931B009EF85C /* Swift3Tutorial */,
+				31C49DF21E3F931B009EF85C /* SwiftTutorial */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -162,9 +162,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		31C49DF11E3F931B009EF85C /* Swift3Tutorial */ = {
+		31C49DF11E3F931B009EF85C /* SwiftTutorial */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 31C49DF91E3F931B009EF85C /* Build configuration list for PBXNativeTarget "Swift3Tutorial" */;
+			buildConfigurationList = 31C49DF91E3F931B009EF85C /* Build configuration list for PBXNativeTarget "SwiftTutorial" */;
 			buildPhases = (
 				31C49DEE1E3F931B009EF85C /* Sources */,
 				31C49DEF1E3F931B009EF85C /* Frameworks */,
@@ -174,9 +174,9 @@
 			);
 			dependencies = (
 			);
-			name = Swift3Tutorial;
+			name = SwiftTutorial;
 			productName = Swift3Tutorial;
-			productReference = 31C49DF21E3F931B009EF85C /* Swift3Tutorial */;
+			productReference = 31C49DF21E3F931B009EF85C /* SwiftTutorial */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -195,7 +195,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 31C49DED1E3F931B009EF85C /* Build configuration list for PBXProject "Swift3Tutorial" */;
+			buildConfigurationList = 31C49DED1E3F931B009EF85C /* Build configuration list for PBXProject "SwiftTutorial" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -207,7 +207,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				31C49DF11E3F931B009EF85C /* Swift3Tutorial */,
+				31C49DF11E3F931B009EF85C /* SwiftTutorial */,
 			);
 		};
 /* End PBXProject section */
@@ -358,7 +358,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		31C49DED1E3F931B009EF85C /* Build configuration list for PBXProject "Swift3Tutorial" */ = {
+		31C49DED1E3F931B009EF85C /* Build configuration list for PBXProject "SwiftTutorial" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				31C49DF71E3F931B009EF85C /* Debug */,
@@ -367,7 +367,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		31C49DF91E3F931B009EF85C /* Build configuration list for PBXNativeTarget "Swift3Tutorial" */ = {
+		31C49DF91E3F931B009EF85C /* Build configuration list for PBXNativeTarget "SwiftTutorial" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				31C49DFA1E3F931B009EF85C /* Debug */,

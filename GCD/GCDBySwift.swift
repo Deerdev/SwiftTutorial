@@ -175,10 +175,17 @@ class GCDBySwift: NSObject {
             debugPrint("通知主线程：任务执行完成，value=\(i)")
         }
         
+        // 取消执行
+        workItem.cancel()
+        
+        let workItemBarrier = DispatchWorkItem(flags: .barrier) {
+            debugPrint("写时加锁")
+        }
+        
 //        DispatchQueue.global().async(execute: workItem)
         
         
-        /// 5- DispatchGroup: 执行完所有任务后，再执行某种操作
+        /// 6- DispatchGroup: 执行完所有任务后，再执行某种操作
         let queueGroup = DispatchGroup()
         let queue7 = DispatchQueue(label: "com.deerdev.gcd7")
         let queue8 = DispatchQueue(label: "com.deerdev.gcd8")
@@ -189,9 +196,46 @@ class GCDBySwift: NSObject {
             debugPrint("执行任务2")
         }
         
-        queueGroup.notify(queue: DispatchQueue.main) {
+        queueGroup.notify(queue: queue1) {
             debugPrint("任务1&任务2 都执行完成")
         }
+        // <-------------------------- enter() & leave() --------------------------->
+        /*
+         组合和连接任务
+         notify的block块会等到 任务3和任务4执行后 才会执行
+         */
+        queueGroup.enter()
+        queue7.async(group: queueGroup) {
+            debugPrint("执行任务3")
+            queueGroup.leave()
+        }
+        queueGroup.enter()
+        queue8.async(group: queueGroup) {
+            debugPrint("执行任务4")
+            queueGroup.leave()
+        }
         
+        queueGroup.notify(queue: queue1) {
+            debugPrint("任务3&任务4 都执行完成")
+        }
+        
+        /// 7- DispatchSemaphore
+        let semaphore = DispatchSemaphore(value: 0)
+        queue7.async(group: queueGroup) {
+            debugPrint("执行任务5")
+            semaphore.signal()
+        }
+        semaphore.wait()
+        
+        queue8.async(group: queueGroup) {
+            debugPrint("执行任务6")
+//            sleep(3)
+            semaphore.signal()
+        }
+        let result = semaphore.wait(timeout: .now() + 2)
+        if result == .timedOut {
+            debugPrint("等待超时")
+        }
+        debugPrint("任务5&任务6 都执行完成")
     }
 }
