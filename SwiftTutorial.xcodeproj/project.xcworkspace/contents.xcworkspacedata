@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Swift3Tutorial.xcodeproj">
+      location = "self:/Users/daoquan/[5]iOSProject/Swift3Tutorial/SwiftTutorial.xcodeproj">
    </FileRef>
 </Workspace>

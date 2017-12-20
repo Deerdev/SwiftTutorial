@@ -466,5 +466,27 @@ func collertionProtocol() {
 // *** 如果一个协议 写了多个 协议扩展+限定条件（提供了相同方法的默认实现），且遵循该协议的类型 都符合这些限定条件，
 // *** 那么该类型，将会使用“限制条件最多”的那个协议扩展提供的 默认实现
 
+// —————————————————————————————————————————————————————————————————
 
+/// <-------------------------- protocols do not conform to themselves --------------------------->
+// https://stackoverflow.com/questions/40783044/associatedtype-swift-3
+protocol Protocol_1 {
+    associatedtype T
+}
+
+protocol Protocol_A {}
+struct SomeStruct_2: Protocol_A {}
+
+struct SomeStruct_1: Protocol_1 {
+    typealias T = Protocol_A
+}
+
+// 通过 == 判断类型匹配，而不是conform(:)
+//func testFunction<P: Protocol_1>(t: P) where P.T : Protocol_A {}
+func testFunction<P: Protocol_1>(t: P) where P.T == Protocol_A {}
+
+func testFunction() {
+    let struct1 = SomeStruct_1()
+    testFunction(t: struct1) // *Generic parameter 'P' could not be inferred*
+}
 
