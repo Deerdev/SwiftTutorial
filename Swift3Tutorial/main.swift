@@ -18,7 +18,7 @@ import Foundation
 //basicOperators()
 
 /// 3
-stringAndCharacters()
+//stringAndCharacters()
 //unicodeTransform()
 
 /// 4
@@ -31,8 +31,12 @@ stringAndCharacters()
 //testMultiply()
 
 /// gcd
-let gcd = GCDBySwift()
-gcd.creaeQueue()
+//let gcd = GCDBySwift()
+//gcd.creaeQueue()
 
-
+/// advance
+//arrayAdvance()
+//dictAdvance()
+//setAdvance()
+rangeAdvance()
 

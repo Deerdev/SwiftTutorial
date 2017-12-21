@@ -35,6 +35,7 @@
 		31C49E011E40FA80009EF85C /* 03StringsAndCharacters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C49E001E40FA80009EF85C /* 03StringsAndCharacters.swift */; };
 		31DD5B0B1E8DDE8700A720EF /* 13Inheritence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD5B0A1E8DDE8600A720EF /* 13Inheritence.swift */; };
 		31E8118C1EC4459E00930169 /* 26GuardTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E8118B1EC4459E00930169 /* 26GuardTest.swift */; };
+		31FEC0451FEA4DD000F715AA /* CollectionAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FEC0441FEA4DD000F715AA /* CollectionAdvance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,7 +58,7 @@
 		311DBCBB1E8BE8FF00EF9732 /* 09ClassAndStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 09ClassAndStruct.swift; sourceTree = "<group>"; };
 		311DBCBD1E8BEBC800EF9732 /* 10Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 10Properties.swift; sourceTree = "<group>"; };
 		311DBCBF1E8C87F700EF9732 /* 11Methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 11Methods.swift; sourceTree = "<group>"; };
-		31252EE21E6DA5F4009E362B /* 04CollectionTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 04CollectionTypes.swift; sourceTree = "<group>"; };
+		31252EE21E6DA5F4009E362B /* 04CollectionTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 04CollectionTypes.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		31468DE41E91102000E7B40C /* 17OptionalChaining.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 17OptionalChaining.swift; sourceTree = "<group>"; };
 		31468DE61E93E92300E7B40C /* 18ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 18ErrorHandling.swift; sourceTree = "<group>"; };
 		31468DE81E94787700E7B40C /* 19TypeCasting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 19TypeCasting.swift; sourceTree = "<group>"; };
@@ -79,6 +80,7 @@
 		31C49E001E40FA80009EF85C /* 03StringsAndCharacters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 03StringsAndCharacters.swift; sourceTree = "<group>"; };
 		31DD5B0A1E8DDE8600A720EF /* 13Inheritence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 13Inheritence.swift; sourceTree = "<group>"; };
 		31E8118B1EC4459E00930169 /* 26GuardTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 26GuardTest.swift; sourceTree = "<group>"; };
+		31FEC0441FEA4DD000F715AA /* CollectionAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionAdvance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 		31C49DE91E3F931B009EF85C = {
 			isa = PBXGroup;
 			children = (
+				31FEC0431FEA4D6B00F715AA /* AdvancedSwift */,
 				310409351FDEB1E8008FB0C1 /* GCD */,
 				318F2AD11FD5327000FB6126 /* InterOperateCWithSwift */,
 				31E8118B1EC4459E00930169 /* 26GuardTest.swift */,
@@ -157,6 +160,14 @@
 				31C49DF51E3F931B009EF85C /* main.swift */,
 			);
 			path = Swift3Tutorial;
+			sourceTree = "<group>";
+		};
+		31FEC0431FEA4D6B00F715AA /* AdvancedSwift */ = {
+			isa = PBXGroup;
+			children = (
+				31FEC0441FEA4DD000F715AA /* CollectionAdvance.swift */,
+			);
+			path = AdvancedSwift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +237,7 @@
 				31C49DFD1E3F984C009EF85C /* 01Basics.swift in Sources */,
 				31468DF31E951C7100E7B40C /* 24AccessControl.swift in Sources */,
 				31468DE71E93E92300E7B40C /* 18ErrorHandling.swift in Sources */,
+				31FEC0451FEA4DD000F715AA /* CollectionAdvance.swift in Sources */,
 				311DBCC01E8C87F700EF9732 /* 11Methods.swift in Sources */,
 				311DBCBC1E8BE8FF00EF9732 /* 09ClassAndStruct.swift in Sources */,
 				31468DF51E95C7B400E7B40C /* 25AdvancedOperators.swift in Sources */,

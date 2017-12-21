@@ -10,6 +10,9 @@ import Foundation
 
 /// 集合：Arrays Sets Dictionaries
 
+// MARK: - array
+
+// MARK: - 数组
 func arraryInfo() -> Void {
     
     /// 数组定义Array<Element> || [Element]
@@ -75,8 +78,7 @@ func arraryInfo() -> Void {
     // 计数
     print("stringList contains \(stringList.count) items.")
     // 是否为空
-    if stringList.isEmpty {
-    }
+    if stringList.isEmpty {}
     
     // 添加元素
     stringList.append("water")
@@ -105,8 +107,10 @@ func arraryInfo() -> Void {
     /// 删除
     stringList.remove(at: 0)
     print(stringList) // ["egg", "dog", "cat", "cheese", "Butter"]
-    // 删除最后一项（不能是 空数组）
+    // 删除最后一项（不能是 空数组, 会crsh）
     stringList.removeLast()
+    // 删除最后一项（空数组不会crsh）
+    stringList.popLast()
     print(stringList) // ["egg", "dog", "cat", "cheese"]
     // 删除最后两项
     stringList.removeLast(2)
@@ -121,8 +125,8 @@ func arraryInfo() -> Void {
     }
     
     /// 遍历
-    for item in stringList {
-    }
+    for item in stringList {}
+    
     // 遍历下标和值 enumrated
     for (index, value) in stringList.enumerated() {
         print("Item \(String(index+1)): \(value)")
@@ -136,16 +140,16 @@ func arraryInfo() -> Void {
     }
     
     /// swift数组的正确使用(减少下标的使用)
-    var a = [0, 1, 2, 3, 4, 5]
+    let a = [0, 1, 2, 3, 4, 5]
     // 查找数组中值为1的元素的位置，返回Optional<Int>
-    a.index { $0 == 1 }
+    _ = a.index { $0 == 1 }
     // 过滤数组元素(显示出数组中的 偶数)
-    a.filter { $0 % 2 == 0 }
+    _ = a.filter { $0 % 2 == 0 }
 
-    // first last都是option类型
-    a.first // 0
-    a.last  // 5
-    type(of: a.first) // Optional<Int>.Type
+    // first last都是option类型(可能是空数组)
+    _ = a.first // 0    = isEmpty ? nil : self[0]
+    _ = a.last  // 5
+    _ = type(of: a.first) // Optional<Int>.Type
     
     /// 获取“满足条件”的元素的分界点
     /// partition(by:)则会根据指定的条件返回一个分界点位置。这个分界点分开的两部分中，前半部分的元素都不满足指定条件；后半部分都满足指定条件。
@@ -159,6 +163,7 @@ func arraryInfo() -> Void {
     fibonacci.reduce(0, +) // 12
 }
 
+// MARK: - set
 func setInfo() -> Void {
     /// 集合的值具有唯一性
     // a == b --> a.hashValue == b.hashValue
@@ -172,7 +177,7 @@ func setInfo() -> Void {
     letters.insert("a")
     letters = [] // 类型推断
     // 字面量初始化
-//    var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
+    //    var favoriteGenres:lett<String> = ["Rock", "Classical", "Hip hop"]
     var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"] // 简化表达，但必须显示声明"Set"
     
     /// Set操作
@@ -223,6 +228,7 @@ func setInfo() -> Void {
     
 }
 
+// MARK: - dict
 func dictInfo() -> Void {
     /// Dictionary<Key, Value>
     /// Key必须遵循Hashable协议
@@ -278,36 +284,6 @@ func dictInfo() -> Void {
     /// 排序(针对key或value排序)
 //    airPorts.sorted(by: ((key: String, value: String), (key: String, value: String)) -> Bool)
     
-}
-
-
-/// Dictionary常用的Extention
-extension Dictionary {
-    /// merge
-    /// 把两个相同类型的字典合并，key相同时替换value
-    // S必须遵从Sequence protocol
-    mutating func merge<S:Sequence>(_ sequence: S)
-        // 类型必须是字典定义的Key和Value
-        where S.Iterator.Element == (key: Key, value: Value) {
-            
-            sequence.forEach { self[$0] = $1 }
-    }
-    
-    /// 用一个tuple数组初始化Dictionary
-    init<S:Sequence>(_ sequence: S)
-        where S.Iterator.Element == (key: Key, value: Value) {
-            
-            self = [:]
-            self.merge(sequence)
-    }
-    
-    /// 改变value的形式
-    func mapValue<T>(_ transform: (Value) -> T) -> [Key: T] {
-        // map得到了一个Array<(String, RecordType)>类型的Array，而后，由于Array也遵从了Sequence protocol，因此，我们就能直接使用这个Array来定义新的Dictionary了
-        return Dictionary<Key, T>(map { (k, v) in
-            return (k, transform(v))
-        })
-    }
 }
 
 /// 只有数组的下标返回的是对应下标的值，其他集合类型返回的是对应下标的 值 的拷贝
