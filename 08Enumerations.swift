@@ -96,6 +96,7 @@ let possiblePlanet = Planet(rawValue: 7) // possiblePlanet 类型为 Planet? 值
 /// 递归枚举 Recursive Enumerations
 // 一个或多个枚举成员使用该枚举类型的实例作为关联值
 // 在枚举成员前加上 indirect
+// ** indirect 表示 这个枚举值被看做 引用
 enum ArithmeticExpression1 {
     case number(Int)
     indirect case addition(ArithmeticExpression1, ArithmeticExpression1)

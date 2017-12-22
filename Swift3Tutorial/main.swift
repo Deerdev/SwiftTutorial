@@ -38,5 +38,6 @@ import Foundation
 //arrayAdvance()
 //dictAdvance()
 //setAdvance()
-rangeAdvance()
+//rangeAdvance()
+sliceAdvance()
 
