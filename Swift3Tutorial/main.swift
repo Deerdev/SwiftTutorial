@@ -30,6 +30,9 @@ import Foundation
 //switchInfo()
 //testMultiply()
 
+/// 16
+captureListForClosure()
+
 /// gcd
 //let gcd = GCDBySwift()
 //gcd.creaeQueue()
@@ -39,5 +42,6 @@ import Foundation
 //dictAdvance()
 //setAdvance()
 //rangeAdvance()
-sliceAdvance()
+//sliceAdvance()
+//optionalAdvance()
 

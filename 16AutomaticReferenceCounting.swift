@@ -198,7 +198,76 @@ class HTMLElementSafe {
     
 }
 
+// MARK: - 更新
 
+/// <-------------------------- 2017.12.29 --------------------------->
+/// 捕获列表的实际含义
+
+func captureListForClosure() {
+    var arrayClosure :  [() -> ()] = []
+    var i = 0
+    /// 1.不使用捕获列表(默认捕获 变量的值的引用--即指针本身的内存，不是指针的指向)
+    /*
+     被捕获的变量在闭包被执行的时候才被定值
+     闭包外的修改 会影响 闭包内的值
+    */
+    for _ in 0...2 {
+        arrayClosure.append { print(i) }
+        i += 1
+    }
+    
+    for j in 0..<arrayClosure.count {
+        arrayClosure[j]()
+    }
+    // 输出 3, 3, 3
+    
+    
+    i = 0
+    arrayClosure.removeAll()
+    /// 2.使用捕获列表(捕获变量的值，即指针指向的值)
+    /*
+     捕获一个作为静态copy的变量，闭包外的修改不影响闭包内的值
+     */
+    for _ in 0...2 {
+        arrayClosure.append { [i] in
+            print(i)
+        }
+        i += 1
+    }
+    
+    for j in 0..<arrayClosure.count {
+        arrayClosure[j]()
+    }
+    // 输出 0, 1, 2
+    
+    /// 捕获一个作为静态copy的变量
+    var str = "Hello, playground"
+    let show = { [strcopy = str] in
+        // 在闭包一开始创建的时候捕获变量的值，
+        // []内的为捕获列表，一开始捕获值，而非引用。
+        // 捕获的为原始变量的副本->常量，并且只能在闭包内访问
+        print("这是str-----\(str)\n这是strcopy-----\(strcopy)")
+    }
+    str = "hello"
+    show()
+    // 这是str-----hello
+    // 这是strcopy-----Hello, playground
+    
+    /// 闭包内修改变量的值
+    /*
+     使用var声明变量
+    */
+    var name = "John"
+    let test = {
+        name = "Jack"
+        print(name)
+    }
+    name = "Aby"
+    print(name)
+    test()
+    // "Aby"
+    // "Jack"
+}
 
 
 

@@ -279,7 +279,7 @@ func sliceAdvance() {
     
     
     /*
-     除了保存对原集合类型的引用之外，Slice 还存储了切片边界的开始索引和结束索引。
+     除了保存对原集合类型的引用之外，Slice 还存储了切片边界的 开始索引 和 结束索引。
      所以在 List 的场合，因为列表【本身是由两个索引】组成的，所以切片占用的大小也将会是原来列表的两倍：
      */
     // 一个拥有两个节点 (start 和 end) 的列表的大小：
@@ -287,11 +287,14 @@ func sliceAdvance() {
     
     // 切片的大小是列表的大小再加上子范围的大小
     // (两个索引之间的范围。在 List 的情况下这个范围也是节点)
-    print(MemoryLayout.size(ofValue: list.dropFirst())) //64
+    print(MemoryLayout.size(ofValue: list.dropFirst())) //64（实现自定义 切片后 64 -> 32）
+    
+    // 实现自定义 切片后 64 -> 32
+    let list1: MyListCollection = [1, 2, 3, 4, 5]
+    print(MemoryLayout.size(ofValue: list1.dropFirst()))    // 32
 }
 
 // Slice的实现
-
 struct MySlice<Base: Collection>: Collection {
     typealias Index = Base.Index
     typealias IndexDistance = Base.IndexDistance
@@ -319,6 +322,68 @@ struct MySlice<Base: Collection>: Collection {
         return MySlice(base: collection, bounds: bounds)
     }
 }
+
+// 实现自定义 切片
+extension MyListCollection {
+    public subscript(bounds: Range<Index>) -> MyListCollection<Element> {
+        // 返回自身，只是持有不同的起始索引 和 结束索引 来表示一个子序列，序列内存和序列相同
+        return MyListCollection(startIndex: bounds.lowerBound, endIndex: bounds.upperBound)
+    }
+}
+
+/*
+ 另一件需要考虑的事情是，对于包括 Swift 数组和字符串在内的很多可以被切片的容器，它们的切片将和原来的集合共享存储缓冲区。
+ 这会带来一个不好的副作用：切片将在它的整个生命周期中持有集合的缓冲区，而不论集合本身是不是已经超过了作用范围。
+ 如果你将一个 1 GB 的文件读入到数组或者字符串中，然后获取了它的很小的一个切片，整个这 1 GB 的缓冲区会一直存在于内存中，
+ 直到集合和切片都被销毁时才能被释放。这也是 Apple 在文档中特别警告“只应当将切片用作临时计算的目的”的原因。
+                         |
+                         |
+                         v
+ 对于MyListCollection，该问题不严重，因为节点通过ARC来管理：
+ 当切片是仅存的复制时，所有在切片前方的节点都会变成无人引用的状态，这部分内存将得到回收
+ 
+                            a.suffix(2)
+                    +------------+----------+
+                    | startIndex | endIndex |
+                 +--+------------+----------+-----+
+                 |                                |
+                 |                                |
+                 |                                |
+         +-----+-v-+------+         +-----+---+---v--+
+         | tag | 2 | node |         | tag | 0 | node |
+         +-----+---+-----++         +-----+---+------+----+
+                         |                                |
+                         |                                |
+                         |                                |
++---+------+      +---+--v---+      +---+------+      +---v--+
+| 4 | next +------> 5 | next +------> 6 | next +------> .end |
++---+------+      +---+------+      +---+------+      +------+
+ 节点被回收
+ 
+ 
+                            a.prefix(2)
+                     +------------+----------+
+                     | startIndex | endIndex |
+                  +--+------------+----------+-----+
+                  |                                |
+                  |                                |
+          +-----+-v-+------+         +-----+---+---v--+
+          | tag | 3 | node |         | tag | 2 | node |
+          +-----+---+---+--+         +-----+---+---+--+
+                        |                          |
+   +--------------------+                          |
+   |                 +-----------------------------+
+   |                 |
+ +-v-+------+      +-v-+------+      +---+------+      +------+
+ | 4 | next +------> 5 | next +------> 6 | next +------> .end |
+ +---+------+      +---+------+      +---+------+      +------+
+                                    节点不会被回收（5索引6，6索引end）
+ */
+
+
+
+
+
 
 
 
