@@ -12,18 +12,43 @@ func stringAndCharacters() -> Void {
     /// 空字符串（两个等价）
     var emptyStr = ""
     var anotherEmpty = String()
+
+    /// 多行字符串定义
+    // """包裹，内容中包含"""时，只需要反斜杠一个"即可
+    let quotation1 = """
+    The White Rabbit put on his spectacles.  "Where shall I begin,
+    please your Majesty?" he asked.
+
+    "Begin at the beginning," the King said gravely, "and go on
+    till you come to the end; then stop."
+    Escaping the first quote \"""
+    """
+
+    // 最后一个"""起到对齐作用，Begin和"""相比落后4个空格，所以只有Begin前面有空格，其他行没有空格
+    let quotation2 = """
+        The White Rabbit put on his spectacles.  "Where shall I begin,
+        please your Majesty?" he asked.
+
+            "Begin at the beginning," the King said gravely, "and go on
+        till you come to the end; then stop."
+        Escaping the first quote \"""
+        """
     
     /// 字符串是值类型（不是引用）
     var hello = "hello"
     
     /// 在字符串遍历字符
-    for c in hello.characters {
-        print("hello: \(c)")
+    for character in hello {
+        print("hello: \(character)")
     }
     
     /// 字符数组定义
     let catCharacters: [Character] = ["C", "a", "b"]
-    
+
+    /// 字面量定义
+    let wiseWords = "\0"    // \0：空字符
+    let haert = "\u{1F496}"  // "💖"
+
     /// 字符串拼接
     var str1 = "aa"
     var str2 = "bb"
@@ -40,7 +65,15 @@ func stringAndCharacters() -> Void {
     /// 字符串字符数量
     // 因为swift支持Unicode(扩展群)的，所以数量和NSString的count数量可能不一致（UTF-16）
     // 当一个NSString的length属性被一个Swift的String值访问时，实际上是调用了utf16Count
-    print("the number of hello: \(hello.characters.count)")
+    print("the number of hello: \(hello.count)")
+
+    /// 扩展字形集群
+    // é可以由单个 Unicode 标量 é ( LATIN SMALL LETTER E WITH ACUTE, 或者 U+00E9)表示，也可以由 e( LATIN SMALL LETTER E,或者说  U+0065)，以及 COMBINING ACUTE ACCENT标量( U+0301)表示，实际个数依然是1个
+    var word = "cafe"
+    print("the number of characters in \(word) is \(word.count)") // Prints "the number of characters in cafe is 4"
+
+    word += "\u{301}"    // COMBINING ACUTE ACCENT, U+030
+    print("the number of characters in \(word) is \(word.count)") // Prints "the number of characters in café is 4"
     
     /// 字符串下标索引（不是整数）
     // startIndex第一位；endIndex最后一位的下一位
@@ -50,21 +83,25 @@ func stringAndCharacters() -> Void {
     // 偏移 .index(_:offsetBy:)
     print("第4个字符：\(hello[hello.index(hello.startIndex, offsetBy: 3)])")
     
-    // .characters.indices 下标索引的范围range
-    for index in hello.characters.indices {
+    // .indices 下标索引的范围range
+    for index in hello.indices {
         print("\(hello[index])", terminator:"")
     }
     print("")
-    
-    
+
+    // **************************************************************************************
+    // 可以在任何遵循了 Indexable 协议的类型中使用 startIndex 和 endIndex 属性以及 index(before:) ， index(after:) 和 index(_:offsetBy:) 方法。这包括这里使用的 String ，还有集合类型比如 Array ， Dictionary 和 Set 。
+    // **************************************************************************************
+
     /// 插入
-    // 制定位置插入一个字符
+    // 指定位置插入一个字符
     hello.insert("!", at: hello.endIndex)
-    print("hello.insert1: \(hello)")
+    print("hello.insert1: \(hello)")    // //  "hello!"
+
     // insert(contentsOf:at:)在一个字符串的指定索引插入一段字符串
     // 插入字符集合 "xxx".characters
-    hello.insert(contentsOf: " China".characters, at: hello.index(before: hello.endIndex))
-    print("hello.insert2: \(hello)")
+    hello.insert(contentsOf: " China", at: hello.index(before: hello.endIndex))
+    print("hello.insert2: \(hello)")    //  "hello China!"
     
     /// 删除
     // 删除最后一位"!"
@@ -72,7 +109,7 @@ func stringAndCharacters() -> Void {
     print("hello.remove1: \(hello)")
     
     var nonempty = "non-empty"
-    if let i = nonempty.characters.index(of: "-") {
+    if let i = nonempty.index(of: "-") {
         nonempty.remove(at: i)
     }
     print(nonempty)
