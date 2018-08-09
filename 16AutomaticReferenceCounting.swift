@@ -79,6 +79,7 @@ class CreditCard {
 // 你可以通过 unowned(unsafe) 来声明不安全无主引用。
 // 如果你试图在实例被销毁后，访问该实例的不安全无主引用，你的程序会尝试访问该实例 之前所在的内存地址，这是一个不安全的操作。
 
+/// unowned 引⽤要⽐ weak 引⽤少⼀些性能损耗，因此访问⼀个 unowned 引⽤的属性或者调⽤ 它上⾯的⽅法都会稍微快⼀些；不过，这个因素应该只在性能⾮常重要的代码路径上才需要被 考虑。
 
 /// 无主引用以及隐式解析可选属性 “Unowned References and Implicitly Unwrapped Optional Properties”
 

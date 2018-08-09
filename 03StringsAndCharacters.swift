@@ -80,8 +80,10 @@ func stringAndCharacters() -> Void {
     print("最后一个字符：\(hello[hello.index(before: hello.endIndex)])")
     print("第一个字符：\(hello[hello.startIndex])")
     print("第二个字符：\(hello[hello.index(after: hello.startIndex)])")
-    // 偏移 .index(_:offsetBy:)
+    // 偏移 .index(_:offsetBy:)，超出范围 crah （bad_access）
     print("第4个字符：\(hello[hello.index(hello.startIndex, offsetBy: 3)])")
+    // 带有限制的偏移，超出限制 返回nil
+    print("第4个字符：\(hello.index(hello.startIndex, offsetBy: 100, limitedBy: hello.endIndex))")
     
     // .indices 下标索引的范围range
     for index in hello.indices {
@@ -136,15 +138,18 @@ func stringAndCharacters() -> Void {
     if hello.hasSuffix("lo") {
         print("hello 有后缀 'lo'")
     }
-    
+
+    /// 截取前后 字符串的 【substring】
+    hello.prefix(2)
+    hello.suffix(2)
     
     /// 字符串切片
     let mixStr = "Swift 3.0 is interesting!"
-    let swiftView = mixStr.characters.suffix(12).dropLast()
+    let swiftView = mixStr.suffix(12).dropLast()
     // 先用suffix截掉了头部的"Swift 3.0 is"，再用dropLast方法去掉了末尾的“!”
     // 此时，对mixStr.characters的操作，得到的是一个String.CharacterView对象，需要用这个view，生成一个新的String
     String(swiftView) // swiftView = interesting
-    let strViews = mixStr.characters.split(separator: " ") // String.CharacterView集合
+    let strViews = mixStr.split(separator: " ") // String.CharacterView集合
     
     // 用map方法把每集合中的每一个view都生成一个新的String对象，最后，就得到了一个包含每一个子串的数组Array<String>
     let strList = strViews.map(String.init) // // ["Swift", "3.0", "is", "interesting!"]
@@ -153,12 +158,12 @@ func stringAndCharacters() -> Void {
     
     /// 使用closure来分割
     var i = 0
-    let singleCharViews = mixStr.characters.split { _ in
-        if i > 0 {
+    let singleCharViews = mixStr.split { (c) -> Bool in
+        switch c {
+        case " ":
             i = 0
             return true
-        }
-        else {
+        default:
             i += 1
             return false
         }
@@ -166,6 +171,11 @@ func stringAndCharacters() -> Void {
     
     singleCharViews.map(String.init)
     // ["S", "i", "t", "3", "0", "i", " ", "n", "e", "e", "t", "n", "!"]
+
+    /// 遍历
+    for (i, c) in hello.enumerated() {
+        print("\(i): \(c)")
+    }
 }
 
 

@@ -164,6 +164,7 @@ func autoClosureTest() {
         print("Now serving \(customerProvider())!")
     }
     // 注意 过度使用 autoclosures 会让你的代码变得难以理解。上下文和函数名应该能够清晰地表明求值是被延迟执行的。
+    // 可能在函数的内部逻辑中，也不会执行 自动闭包
     serve(customer: customersInLine.remove(at: 0))
 }
 
