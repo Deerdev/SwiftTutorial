@@ -96,6 +96,7 @@
 		31E8118B1EC4459E00930169 /* 26GuardTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 26GuardTest.swift; sourceTree = "<group>"; };
 		31FEC0441FEA4DD000F715AA /* CollectionAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionAdvance.swift; sourceTree = "<group>"; };
 		51E22C6B2254D262001DA591 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		51E22C6C2254D5C5001DA591 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +128,7 @@
 		31C49DE91E3F931B009EF85C = {
 			isa = PBXGroup;
 			children = (
+				51E22C6C2254D5C5001DA591 /* README.md */,
 				51E22C6B2254D262001DA591 /* MyPlayground.playground */,
 				31FEC0431FEA4D6B00F715AA /* AdvancedSwift */,
 				310409351FDEB1E8008FB0C1 /* GCD */,
