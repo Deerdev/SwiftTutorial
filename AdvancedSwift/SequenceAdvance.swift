@@ -152,7 +152,7 @@ func ListSequenceTest() {
     // collection
     let list2: MyListCollection = ["one", "two", "three"] // List: (one, two, three)
     _ = list2.first // Optional("one")
-    _ = list2.index(of: "two") // Optional(ListIndex(2))
+    _ = list2.firstIndex(of: "two") // Optional(ListIndex(2))
     _ = list2.count // 3
 }
 
