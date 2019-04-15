@@ -207,6 +207,9 @@ func unicodeTransform() -> Void {
         print("\(scalar.value)", terminator:" ")
     }
     print("")   // FIXME: 应该修改的标记
+    
+    /// 加载emoji, 需要{}包裹
+    let emoji = "\u{1F4C4}"
 }
 
 // mark - swift5
