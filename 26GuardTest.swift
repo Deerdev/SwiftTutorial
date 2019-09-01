@@ -39,3 +39,12 @@ class Episode {
         self.init(level: level, title: title, urls: urls)
     }
 }
+
+/// guard不仅可以用return，还可以是break、continue
+func testGuardElse() {
+    let array = [1, 2, 3]
+    for i in array {
+        guard i > 2 else { continue }
+        print(i)
+    }
+}

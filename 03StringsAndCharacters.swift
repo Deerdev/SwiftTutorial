@@ -111,7 +111,7 @@ func stringAndCharacters() -> Void {
     print("hello.remove1: \(hello)")
     
     var nonempty = "non-empty"
-    if let i = nonempty.index(of: "-") {
+    if let i = nonempty.firstIndex(of: "-") {
         nonempty.remove(at: i)
     }
     print(nonempty)
@@ -208,8 +208,37 @@ func unicodeTransform() -> Void {
     }
     print("")   // FIXME: 应该修改的标记
     
+    /// 加载emoji, 需要{}包裹
+    let emoji = "\u{1F4C4}"
+}
 
+// mark - swift5
+func stringSwift5() {
+    /// 更强大的 Raw String
+    let qutoedStr = #"有"双引号"可以不用转义"#
+    // 输出： 有"双引号"可以不用转义
     
+    let escapeStr = #"有\转义符号反斜杆\可以不用转义"#
+    // 输出： 有\转义符号反斜杆\可以不用转义
+    
+    /// 字符串转义 需要修改 \#(variable)
+    let newEscapeStr = #"\"#
+    let newStr = #"加载变量：有\#(newEscapeStr)反斜杠转义符\#(newEscapeStr)"#
+    // 输出：加载变量：有\反斜杠转义符\
+    
+    /// 多行
+    let multiLineText = #"""
+    "\"
+    ''''
+    正常显示
+    """#
+    
+    /// 字符串中有 "#
+    let doubleHashStr = ##"字符串内有"# 使用双#包括"##
+    
+    /// 优雅的正则表达式
+    let regex1 = "\\\\[A-Z]+[A-Za-z]+\\.[a-z]+"
+    let regex2 = #"\\[A-Z]+[A-Za-z]+\.[a-z]+"#
 }
 
 /// 让String支持下标操作(不可取)
@@ -217,10 +246,8 @@ func unicodeTransform() -> Void {
 // 让String支持[]并不是一个好主意
 extension String {
     subscript(index: Int) -> Character {
-        guard let index = self.index(startIndex,
-                                     offsetBy: index, limitedBy: endIndex) else {
-                                        
-                                        fatalError("String index out of range.")
+        guard let index = self.index(startIndex, offsetBy: index, limitedBy: endIndex) else {
+            fatalError("String index out of range.")
         }
         
         return self[index]

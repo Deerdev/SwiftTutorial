@@ -14,7 +14,7 @@ func arrayAdvance() {
     let array = [0, 1, 2, 3, 4, 5]
     
     // 1.1 指定元素的位置
-    if let index = array.index(where: {
+    if let index = array.firstIndex(where: {
         if $0 == 2 {
             return true
         }

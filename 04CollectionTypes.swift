@@ -142,7 +142,7 @@ func arraryInfo() -> Void {
     /// swift数组的正确使用(减少下标的使用)
     let a = [0, 1, 2, 3, 4, 5]
     // 查找数组中值为1的元素的位置，返回Optional<Int>
-    _ = a.index { $0 == 1 }
+    _ = a.firstIndex { $0 == 1 }
     // 过滤数组元素(显示出数组中的 偶数)
     _ = a.filter { $0 % 2 == 0 }
 

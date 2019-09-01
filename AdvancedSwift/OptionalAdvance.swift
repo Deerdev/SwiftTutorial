@@ -18,12 +18,12 @@ import Foundation
  */
 func optionalAdvance() {
     var array = ["one", "two", "three"]
-    switch array.index(of: "four") {
+    switch array.firstIndex(of: "four") {
     case .some(let idx): array.remove(at: idx)
     case .none: print("idx is null")
     }
     
-    switch array.index(of: "four") {
+    switch array.firstIndex(of: "four") {
     case let idx?: array.remove(at: idx)
     case nil: print("idx is null")
     }
@@ -125,7 +125,7 @@ func optionalAdvance() {
     */
     // 数组操作
     let xx = opStringNumbers.map { Int($0) }    // [Optional(1), Optional(2), Optional(3), nil]
-    let yy = opStringNumbers.flatMap { Int($0) }    // [1, 2, 3]
+    let yy = opStringNumbers.compactMap { Int($0) }    // [1, 2, 3]
 
     /// 给字典赋值nil
     // 正常给字典赋值nil 是移除该键值对

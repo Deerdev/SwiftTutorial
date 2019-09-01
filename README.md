@@ -1,6 +1,7 @@
 
-- 把《The Swift Programming Language 3th》写到代码里
+- 把《The Swift Programming Language》写到代码里
   - 已完成
+  - swift5
  
 - 阅读说明：
   - 已掌握Objc
