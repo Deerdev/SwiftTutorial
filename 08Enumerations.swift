@@ -117,3 +117,43 @@ func testMultiply() {
     let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
     print("(5+4)*2 : \(product)")
 }
+
+
+/// ======swift4.2======
+/// 遍历enum：让enum自身遵从protocol CaseIterable：
+enum Shape: CaseIterable {
+    case rectangle
+    case circle
+    case triangle
+}
+
+func testEnumIterable() {
+    Shape.allCases // [rectangle, circle, triangle]
+}
+
+// 如果enum中有关联值, 就无法使用allClass，因为关联值导致enum是无穷尽的值
+enum Shape2 {
+    case rectangle
+    case circle(Double)
+    case triangle
+}
+
+// 但是可以自己实现某种合成的过程
+extension Shape2: CaseIterable {
+    public typealias AllCases = [Shape2]
+
+    public static var allCases: AllCases {
+        return [Shape2.rectangle, Shape2.circle(1.0), Shape2.triangle]
+    }
+}
+
+//optional类型也是通过enum实现的，但是由于它的case是带有associated value的，因此，Swift编译器无法自动为optional类型合成allCases。也就是说：Shape?.allCases是无法通过编译的的。不过没关系，我们也可以自己来：
+
+extension Optional: CaseIterable where Wrapped: CaseIterable {
+    public typealias AllCases = [Wrapped?]
+    public static var allCases: AllCases {
+        return Wrapped.allCases.map { $0 } + [nil]
+    }
+}
+// 先用Wrapped.allCases.map { $0 }得到非nil值的数组，然后，再把nil硬编码到数组结尾中就好了。
+//有了这个扩展之后，Shape?.allCases就可以通过编译了，它的结果应该是：[.rectange, .circle, .triangle, nil]

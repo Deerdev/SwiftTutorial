@@ -126,4 +126,9 @@ func basicDefination() -> Void {
     // 条件为真，继续运行；
     // 条件为假，停止运行，打印第二个参数
     assert(age >= 0, "A person's age can't be less than zero")
+
+    /// ==========Swift4.2==========
+    /// Bool .toggle(), 给Bool取反
+    var aa = false
+    aa.toggle() // True
 }

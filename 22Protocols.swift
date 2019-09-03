@@ -70,11 +70,11 @@ protocol SomeProtocol1 {
     static func someTypeMethod()
 }
 
-protocol RandomNumberGenerator {
+protocol RandomNumberGeneratorTest {
     // 实例方法
     func random() -> Double
 }
-class LinearCongruentialGenerator: RandomNumberGenerator {
+class LinearCongruentialGenerator: RandomNumberGeneratorTest {
     var lastRandom = 42.0
     let m = 139968.0
     let a = 3877.0
@@ -163,16 +163,16 @@ class SomeSubClass3: SomeSuperClass3, SomeProtocol3 {
 class Dice {
     let sides: Int
     // 属性类型
-    let generator: RandomNumberGenerator
+    let generator: RandomNumberGeneratorTest
     // 参数类型
-    init(sides: Int, generator: RandomNumberGenerator) {
+    init(sides: Int, generator: RandomNumberGeneratorTest) {
         self.sides = sides
         self.generator = generator
     }
     func roll() -> Int {
         return Int(generator.random() * Double(sides)) + 1
     }
-    // generator 属性的类型为 RandomNumberGenerator，因此任何遵循了 RandomNumberGenerator 协议的类型的 实例 都可以赋值给 generator
+    // generator 属性的类型为 RandomNumberGeneratorTest，因此任何遵循了 RandomNumberGeneratorTest 协议的类型的 实例 都可以赋值给 generator
 }
 
 /// 7.委托（代理）模式 Delegation
@@ -429,7 +429,7 @@ class Counter {
 /// 16.协议扩展 Protocol Extensions
 // 通过扩展 为协议添加 方法 属性，并实现方法的 默认实现（Providing Default Implementations）
 // 遵循该协议的类型，自动拥有这些方法，不用重新实现
-extension RandomNumberGenerator {
+extension RandomNumberGeneratorTest {
     // 定义新方法，并实现
     // 遵循该协议的类  可以直接使用
     func randomBool() -> Bool {

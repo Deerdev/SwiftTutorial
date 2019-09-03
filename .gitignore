@@ -17,3 +17,5 @@ xcuserdata/
 *.xcuserstate
 # *.xcscheme
 *.xcsettings
+.idea/
+.vscode/

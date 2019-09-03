@@ -8,6 +8,65 @@
 
 import Foundation
 
+
+/// =====swift4=======
+/// T! 类型也是T?类型，只不过系统会自动unwrap
+// T! 已经不是一个类型
+// 限制了T!使用的场景 var e: [Int!] = [] // error: Using '!' is not allowed here; perhaps '?' was intended?
+
+func implicitlyUnwrappedOptional() {
+    var a: Int?
+    var b: Int!
+//    其中，a的类型是Optional<Int>，而b的类型则是ImplicitlyUnwrappedOptional<Int>。而在Swift4.2中，a和b的类型，都变成了Optional<Int>，只不过，对b来说，编译器会给它做一个标记，以便“在必要的时候”，自动unwrap它包含的值。也就是说，在4.2版本之后，无论是!还是?，代码中都只有一个optional类型，就是Optional<T>
+
+    // sumFn接受两个Optional<Int>参数，并返回一个Optional<Int>，只不过允许编译器自动解出optional的值而已
+    // (Int?, Int?) -> Int?
+    func sumFn(_ m: Int!, _ n: Int!) -> Int! {
+        return m + n
+    }
+
+    var x: Int! // 实际类型是Int?
+    let y = x // Int?
+
+    func id<T>(_ value: T) -> T { return value }
+    type(of: id(x)) // Int?
+
+    func forcedResult() -> Int! { return x }    // 尽管forcedResult的定义里返回了Int!，但是Swift推导出来的类型是() -> Int?
+    type(of: forcedResult) // () -> Optional<Int>
+
+    func apply<T>(_ fn: () -> T) -> T { return fn() }
+    // Error: Value of optional type 'Int?' not unwrapped
+//    let n: Int = apply(forcedResult)
+
+
+    /// AnyObject 类型
+    class A: NSObject {}
+
+    class C {
+        @objc var n: A! = A()
+    }
+
+    func getProperty(object: AnyObject) {
+//        type(of: object.n)
+
+        // 在4.2之前的Swift版本里，访问AnyObject的属性，得到的都是T!。例如，object.n得到的类型就是A!!
+        // 4.2之后，n 实际就unwrap了一次，所以n的类型还是 A?
+//        if let n = object.n {
+//            type(of: n)
+//        }
+
+        // 强制指定 n 的类型为 A，unwrap 两次
+//        if let n: A = object.n {
+//            type(of: n)
+//        }
+    }
+
+    getProperty(object: C())
+}
+
+
+
+
 /// Defining Model Classes for Optional Chaining
 
 class Person {

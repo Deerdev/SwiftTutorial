@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B245E19231BEB260091726B /* 28Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B245E18231BEB260091726B /* 28Math.swift */; };
+		2EFCE8838122E95143E8A08D /* swift5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFCE6D8192079F14BD30CEE /* swift5.swift */; };
 		310409371FDEB213008FB0C1 /* GCDBySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310409361FDEB213008FB0C1 /* GCDBySwift.swift */; };
 		31116B721E90E7480011DC3A /* 14Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31116B711E90E7480011DC3A /* 14Initialization.swift */; };
 		31116B741E9101D90011DC3A /* 15Deinitialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31116B731E9101D90011DC3A /* 15Deinitialization.swift */; };
@@ -58,6 +60,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B245E18231BEB260091726B /* 28Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 28Math.swift; sourceTree = "<group>"; };
+		2EFCE6D8192079F14BD30CEE /* swift5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = swift5.swift; sourceTree = "<group>"; };
 		310409361FDEB213008FB0C1 /* GCDBySwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBySwift.swift; sourceTree = "<group>"; };
 		31116B711E90E7480011DC3A /* 14Initialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 14Initialization.swift; sourceTree = "<group>"; };
 		31116B731E9101D90011DC3A /* 15Deinitialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 15Deinitialization.swift; sourceTree = "<group>"; };
@@ -110,6 +114,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2EFCE41C5B19B40E49D2940A /* Swift5 */ = {
+			isa = PBXGroup;
+			children = (
+				2EFCE6D8192079F14BD30CEE /* swift5.swift */,
+			);
+			path = Swift5;
+			sourceTree = "<group>";
+		};
 		310409351FDEB1E8008FB0C1 /* GCD */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +145,7 @@
 				31FEC0431FEA4D6B00F715AA /* AdvancedSwift */,
 				310409351FDEB1E8008FB0C1 /* GCD */,
 				318F2AD11FD5327000FB6126 /* InterOperateCWithSwift */,
+				1B245E18231BEB260091726B /* 28Math.swift */,
 				31B6F2F3211C346300899A9A /* 27CollectionLazy.swift */,
 				31E8118B1EC4459E00930169 /* 26GuardTest.swift */,
 				31468DF41E95C7B400E7B40C /* 25AdvancedOperators.swift */,
@@ -162,6 +175,7 @@
 				31C49DFC1E3F984C009EF85C /* 01Basics.swift */,
 				31C49DF41E3F931B009EF85C /* Swift3Tutorial */,
 				31C49DF31E3F931B009EF85C /* Products */,
+				2EFCE41C5B19B40E49D2940A /* Swift5 */,
 			);
 			sourceTree = "<group>";
 		};
@@ -256,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				31B6F2F4211C346300899A9A /* 27CollectionLazy.swift in Sources */,
+				1B245E19231BEB260091726B /* 28Math.swift in Sources */,
 				31B6F2EE211BDDBB00899A9A /* StructClassAdvance.swift in Sources */,
 				31468DF11E95045600E7B40C /* 23Generics.swift in Sources */,
 				310409371FDEB213008FB0C1 /* GCDBySwift.swift in Sources */,
@@ -291,6 +306,7 @@
 				31116B761E91027C0011DC3A /* 16AutomaticReferenceCounting.swift in Sources */,
 				31C49E011E40FA80009EF85C /* 03StringsAndCharacters.swift in Sources */,
 				316678161E87B4F0004B899B /* 08Enumerations.swift in Sources */,
+				2EFCE8838122E95143E8A08D /* swift5.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
