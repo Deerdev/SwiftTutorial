@@ -45,3 +45,7 @@ captureListForClosure()
 //sliceAdvance()
 //optionalAdvance()
 
+/// memery
+let cls = objc_getClass("SwiftTutorial.ClassMemeryTest")
+var mTest = ClassMemeryTest()
+print("break point")

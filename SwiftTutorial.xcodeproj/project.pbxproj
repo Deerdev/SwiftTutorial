@@ -43,6 +43,7 @@
 		31DD5B0B1E8DDE8700A720EF /* 13Inheritence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD5B0A1E8DDE8600A720EF /* 13Inheritence.swift */; };
 		31E8118C1EC4459E00930169 /* 26GuardTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E8118B1EC4459E00930169 /* 26GuardTest.swift */; };
 		31FEC0451FEA4DD000F715AA /* CollectionAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FEC0441FEA4DD000F715AA /* CollectionAdvance.swift */; };
+		51C5397D2316700200438091 /* ClassMemeryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C5397C2316700100438091 /* ClassMemeryTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -95,6 +96,7 @@
 		31DD5B0A1E8DDE8600A720EF /* 13Inheritence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 13Inheritence.swift; sourceTree = "<group>"; };
 		31E8118B1EC4459E00930169 /* 26GuardTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 26GuardTest.swift; sourceTree = "<group>"; };
 		31FEC0441FEA4DD000F715AA /* CollectionAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionAdvance.swift; sourceTree = "<group>"; };
+		51C5397C2316700100438091 /* ClassMemeryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMemeryTest.swift; sourceTree = "<group>"; };
 		51E22C6B2254D262001DA591 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		51E22C6C2254D5C5001DA591 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,6 +130,7 @@
 		31C49DE91E3F931B009EF85C = {
 			isa = PBXGroup;
 			children = (
+				51C5397B23166FC400438091 /* MemeryStruct */,
 				51E22C6C2254D5C5001DA591 /* README.md */,
 				51E22C6B2254D262001DA591 /* MyPlayground.playground */,
 				31FEC0431FEA4D6B00F715AA /* AdvancedSwift */,
@@ -193,6 +196,14 @@
 				31B6F2F5211C35BB00899A9A /* StringAdvance.swift */,
 			);
 			path = AdvancedSwift;
+			sourceTree = "<group>";
+		};
+		51C5397B23166FC400438091 /* MemeryStruct */ = {
+			isa = PBXGroup;
+			children = (
+				51C5397C2316700100438091 /* ClassMemeryTest.swift */,
+			);
+			path = MemeryStruct;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,6 +300,7 @@
 				31DD5B0B1E8DDE8700A720EF /* 13Inheritence.swift in Sources */,
 				3157480B1E8DDBB2008FF38E /* 12Subscripts.swift in Sources */,
 				31116B761E91027C0011DC3A /* 16AutomaticReferenceCounting.swift in Sources */,
+				51C5397D2316700200438091 /* ClassMemeryTest.swift in Sources */,
 				31C49E011E40FA80009EF85C /* 03StringsAndCharacters.swift in Sources */,
 				316678161E87B4F0004B899B /* 08Enumerations.swift in Sources */,
 			);
