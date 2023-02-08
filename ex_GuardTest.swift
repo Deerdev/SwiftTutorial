@@ -1,9 +1,9 @@
 //
-//  26GuardTest.swift
-//  Swift3Tutorial
+//  ex_GuardTest.swift
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/5/11.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/5/11.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation

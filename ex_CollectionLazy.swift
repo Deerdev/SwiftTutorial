@@ -1,9 +1,9 @@
 //
-//  27CollectionLazy.swift
+//  ex_CollectionLazy.swift
 //  SwiftTutorial
 //
-//  Created by daoquan on 2018/8/9.
-//  Copyright © 2018年 daoquan. All rights reserved.
+//  Created by deerdev on 2018/8/9.
+//  Copyright © 2018年 deerdev. All rights reserved.
 //
 
 import Foundation

@@ -1,9 +1,9 @@
 //
 //  11Methods.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/3/30.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/3/30.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -51,7 +51,19 @@ struct PointXY3 {
     }
 }
 // *** 对于枚举类型 “可以把self设置为同一枚举类型中不同的成员” ***
-
+enum TriStateSwitch {
+    case off, low, high
+    mutating func next() {
+        switch self {
+        case .off:
+            self = .low
+        case .low:
+            self = .high
+        case .high:
+            self = .off
+        }
+    }
+}
 
 /// 类方法
 // 在方法的func关键字之前加上关键字 static ，来指定类型方法。

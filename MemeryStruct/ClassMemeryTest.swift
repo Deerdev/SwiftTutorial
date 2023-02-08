@@ -3,7 +3,7 @@
 //  SwiftTutorial
 //
 //  Created by walt.lu on 2019/8/28.
-//  Copyright © 2019 daoquan. All rights reserved.
+//  Copyright © 2019 deerdev. All rights reserved.
 //
 
 import Cocoa

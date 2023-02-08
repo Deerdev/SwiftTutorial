@@ -1,9 +1,9 @@
 //
 //  23Generics.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/4/5.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/4/5.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -128,6 +128,27 @@ struct Stack1<Element>: Container {
     }
 }
 
+/// 给关联类型添加约束
+// 要遵守 Container 协议，Item 类型也必须遵守 Equatable 协议
+
+protocol ContainerX {
+    associatedtype Item: Equatable
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -> Item { get }
+}
+ 
+
+/// 在关联类型约束里使用协议
+// 在这个协议里，Suffix 是一个关联类型，就像上边例子中 Container 的 Item 类型一样。
+// Suffix 拥有两个约束：它必须遵循 SuffixableContainer 协议（就是当前定义的协议），以及它的 Item 类型必须是和容器里的 Item 类型相同。
+
+protocol SuffixableContainer: ContainerX {
+    associatedtype Suffix: SuffixableContainer where Suffix.Item == Item
+    func suffix(_ size: Int) -> Suffix
+}
+
+
 /// 6.扩展现有类型来指定关联类型 “Extending an Existing Type to Specify an Associated Type”
 
 // Swift中的Array已经实现了Container协议的所有方法，直接扩展声明Container协议即可
@@ -198,6 +219,75 @@ extension Container where ItemType == Double {
     }
 }
 
+/// 包含上下文关系的 where 分句
+// 不使用该方法，需要写成两个扩展
+protocol Container2 {
+    associatedtype Item: Equatable
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -> Item { get }
+}
 
+// 例子中，当 Item 是整型时为 Container 添加 average() 方法，当 Item 遵循 Equatable 时添加 endsWith(_:) 方法。
+// 两个方法都通过 where 分句对 Container 中定义的泛型 Item 进行了约束。
+extension Container2 {
+    func average() -> Double where Item == Int {
+        var sum = 0.0
+        for index in 0..<count {
+            sum += Double(self[index])
+        }
+        return sum / Double(count)
+    }
+    func endsWith(_ item: Item) -> Bool where Item: Equatable {
+        return count >= 1 && self[count-1] == item
+    }
+}
+//let numbers = [1260, 1200, 98, 37]
+//print(numbers.average())
+//// 输出 "648.75"
+//print(numbers.endsWith(37))
+//// 输出 "true"
+
+/// 具有泛型 Where 子句的关联类型
+// 在关联类型后面加上具有泛型 where 的子句。
+// 例如，建立一个包含迭代器（Iterator）的容器，就像是标准库中使用的 Sequence 协议那样
+protocol Container3 {
+    associatedtype Item
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -> Item { get }
+    
+    // 迭代器（Iterator）的泛型 where 子句要求：无论迭代器是什么类型，迭代器中的元素类型，必须和容器项目的类型保持一致。
+    associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
+    // makeIterator() 则提供了容器的迭代器的访问接口。
+    func makeIterator() -> Iterator
+}
+
+// 一个协议继承了另一个协议，你通过在协议声明的时候，包含泛型 where 子句，来添加了一个约束到被继承协议的关联类型。
+// 例如，下面的代码声明了一个 ComparableContainer 协议，它要求所有的 Item 必须是 Comparable 的。
+protocol ComparableContainer: Container3 where Item: Comparable { }
+
+
+/// 泛型下标
+// 下标可以是泛型，它们能够包含泛型 where 子句。
+// 你可以在 subscript 后用尖括号来写占位符类型，你还可以在下标代码块花括号前写 where 子句
+extension Container3 {
+    subscript<Indices: Sequence>(indices: Indices) -> [Item]
+        where Indices.Iterator.Element == Int {
+            var result: [Item] = []
+            for index in indices {
+                result.append(self[index])
+            }
+            return result
+    }
+}
+/*
+ 这个 Container 协议的扩展添加了一个下标方法，接收一个索引的集合，返回每一个索引所在的值的数组。这个泛型下标的约束如下：
+ - 在尖括号中的泛型参数 Indices，必须是符合标准库中的 Sequence 协议的类型。
+ - 下标使用的单一的参数，indices，必须是 Indices 的实例。
+ - 泛型 where 子句要求 Sequence（Indices）的迭代器，其所有的元素都是 Int 类型。这样就能确保在序列（Sequence）中的索引和容器（Container）里面的索引类型是一致的。
+ 
+ 综合一下，这些约束意味着，传入到 indices 下标，是一个整型的序列。
+ */
 
 

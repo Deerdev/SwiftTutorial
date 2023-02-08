@@ -1,9 +1,9 @@
 //
 //  03StringsAndCharacters.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/2/1.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/2/1.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -14,25 +14,46 @@ func stringAndCharacters() -> Void {
     var anotherEmpty = String()
 
     /// 多行字符串定义
-    // """包裹，内容中包含"""时，只需要反斜杠一个"即可
+    // """包裹
+    // 可以用在行尾写一个反斜杠（\）作为续行符，不会生成换行符
     let quotation1 = """
+The White Rabbit put on his spectacles.  "Where shall I begin,
+please your Majesty?" he asked.
+
+"Begin at the beginning," the King said gravely, "and go on \
+till you come to the end; then stop."
+"""
+
+    // 最后一个"""起到对齐作用，Begin和"""相比落后4个空格，所以只有Begin前面有空格
+    // 其他行前面没有空格，因为最后一个"""前面的空格都会被忽略
+    let quotation2 = """
     The White Rabbit put on his spectacles.  "Where shall I begin,
     please your Majesty?" he asked.
 
-    "Begin at the beginning," the King said gravely, "and go on
+        "Begin at the beginning," the King said gravely, "and go on
     till you come to the end; then stop."
-    Escaping the first quote \"""
+    Escaping the first quote
     """
-
-    // 最后一个"""起到对齐作用，Begin和"""相比落后4个空格，所以只有Begin前面有空格，其他行没有空格
-    let quotation2 = """
-        The White Rabbit put on his spectacles.  "Where shall I begin,
-        please your Majesty?" he asked.
-
-            "Begin at the beginning," the King said gravely, "and go on
-        till you come to the end; then stop."
-        Escaping the first quote \"""
-        """
+    
+    // 第一个"""之后不会换行，最后一个"""之前不会换行，以下两个字符串相等
+    let singleLineString = "These are the same."
+    let multilineString = """
+    These are the same.
+    """
+    
+    // 转义 """
+    let threeDoubleQuotes = """
+    Escaping the first quote \"\"\"
+    Escaping all three quotes \"\"\"
+    """
+    
+    // 扩展字符串分隔符: 直接包含而非转义
+    // \n 直接当字符传输入，不会换行
+    // 需要换行加 \#n
+    let signleline = #"Line 1 \nLine 2"#
+    let threeMoreDoubleQuotationMarks = #"""
+    Here are three more double quotes: """\n
+    """#
     
     /// 字符串是值类型（不是引用）
     var hello = "hello"
@@ -43,7 +64,9 @@ func stringAndCharacters() -> Void {
     }
     
     /// 字符数组定义
-    let catCharacters: [Character] = ["C", "a", "b"]
+    let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
+    let catString = String(catCharacters)
+    print(catString) // 打印输出：“Cat!🐱”
 
     /// 字面量定义
     let wiseWords = "\0"    // \0：空字符
@@ -53,14 +76,21 @@ func stringAndCharacters() -> Void {
     var str1 = "aa"
     var str2 = "bb"
     var str3 = str1 + str2
-    print("string3 = : \(str3)")
+    print("string3 = : \(str3)") // string3 = : aabb
+    // appending 追加生成新字符串
     str3 = str1.appending("cc")
-    print("string3.appending: \(str3)")
+    print("string3.appending: \(str3)") // string3.appending: aacc
+    // append 直接修改当前字符串
+    str3.append("dd")
+    print("string3.append: \(str3)") // string3.append: aaccdd
     
     /// 字符串插值 构建新字符
     let multiplier = 3
     let message = "\(multiplier) times 2.5 is \(Double(multiplier)*2.5)"
     print("message字符串插值初始化:\(message)")
+    // 插值失效
+    // 改为 `\#(multiplier)` 会继续生效
+    print(#"Write an interpolated string in Swift using \(multiplier)."#)
     
     /// 字符串字符数量
     // 因为swift支持Unicode(扩展群)的，所以数量和NSString的count数量可能不一致（UTF-16）
@@ -139,12 +169,25 @@ func stringAndCharacters() -> Void {
         print("hello 有后缀 'lo'")
     }
 
+    
+    
+    /// 字符串切片 substring
+    // substring 和 原 string 共享内存
+    let greeting = "Hello, world!"
+    let index = greeting.firstIndex(of: ",") ?? greeting.endIndex
+    let beginning = greeting[..<index] // beginning 的值为 "Hello"
+    // 把结果转化为 String 以便长期存储。（和原 string 不再共享内存）
+    let newString = String(beginning)
+    
+    /// hasSuffix / hasPrefix
+    let mixStr = "Swift 3.0 is interesting!"
+    if mixStr.hasSuffix("Swift") {
+        print("has suffix")
+    }
+    
     /// 截取前后 字符串的 【substring】
     hello.prefix(2)
     hello.suffix(2)
-    
-    /// 字符串切片
-    let mixStr = "Swift 3.0 is interesting!"
     let swiftView = mixStr.suffix(12).dropLast()
     // 先用suffix截掉了头部的"Swift 3.0 is"，再用dropLast方法去掉了末尾的“!”
     // 此时，对mixStr.characters的操作，得到的是一个String.CharacterView对象，需要用这个view，生成一个新的String
@@ -157,6 +200,7 @@ func stringAndCharacters() -> Void {
     print(strList)
     
     /// 使用closure来分割
+    // 按空格分隔单词
     var i = 0
     let singleCharViews = mixStr.split { (c) -> Bool in
         switch c {
@@ -170,7 +214,7 @@ func stringAndCharacters() -> Void {
     }
     
     singleCharViews.map(String.init)
-    // ["S", "i", "t", "3", "0", "i", " ", "n", "e", "e", "t", "n", "!"]
+    // ["Swift", "3.0", "is", "interesting!"]
 
     /// 遍历
     for (i, c) in hello.enumerated() {
@@ -188,6 +232,7 @@ func unicodeTransform() -> Void {
         print("\(codeUnit)", terminator:" ")
     }
     print("")
+    // 68 111 103 226 128 188 240 159 144 182
     
     /// utf-16
     print("utf-16:", terminator:" ")
@@ -195,18 +240,22 @@ func unicodeTransform() -> Void {
         print("\(codeUnit)", terminator:" ")
     }
     print("")
+    // 68 111 103 8252 55357 56374
     
     /// unicode
     print("unicode(string):", terminator:" ")
-    for scalar in dogString.unicodeScalars {    // TODO: 待完善Unicode view的详解
-        print("\(scalar)", terminator:" ")
+    for scalar in dogString.unicodeScalars {
+        print("\(scalar)", terminator:"")
     }
     print("")
+    // Dog‼🐶
+    
     print("unicode(value):", terminator:" ")
     for scalar in dogString.unicodeScalars {
         print("\(scalar.value)", terminator:" ")
     }
-    print("")   // FIXME: 应该修改的标记
+    print("")
+    // 68 111 103 8252 128054
     
     /// 加载emoji, 需要{}包裹
     let emoji = "\u{1F4C4}"

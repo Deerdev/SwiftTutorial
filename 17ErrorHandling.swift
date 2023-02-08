@@ -1,9 +1,9 @@
 //
-//  18ErrorHandling.swift
-//  Swift3Tutorial
+//  17ErrorHandling.swift
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/4/4.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/4/4.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -141,6 +141,7 @@ func someThrowingFunctionNotThrows() {
 
 
 /// 禁用错误传递 Disabling Error Propagation
+// 有时你知道某个 throwing 函数实际上在运行时是不会抛出错误的
 // 【try!】 : 该错误不会在运行时抛出
 // 运行时不会有错误抛出，所以适合禁用错误传递
 

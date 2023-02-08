@@ -1,9 +1,9 @@
 //
 //  22Protocols.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/4/5.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/4/5.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -334,10 +334,10 @@ extension SnakesAndLadders: PrettyTextRepresentable {
 
 
 /// 12.类 类型 专属协议 Class-Only Protocols
-// 在协议的继承列表中，通过添加【class】关键字来限制协议只能被类类型遵循，而结构体或枚举不能遵循该协议。
-// class 关键字必须第一个出现在协议的继承列表中
+// 在协议的继承列表中，通过添加【AnyObject】关键字来限制协议只能被类类型遵循，而结构体或枚举不能遵循该协议。
+// AnyObject 关键字必须第一个出现在协议的继承列表中
 
-protocol SomeClassOnlyProtocol: class, InheritingProtocol {
+protocol SomeClassOnlyProtocol: AnyObject, InheritingProtocol {
     // class-only protocol definition goes here
 }
 
@@ -405,9 +405,11 @@ func checkProtocol() {
 
 /// 15.可选的协议要求 Optional Protocol Requirements
 // 遵循协议的类型，选择实现 协议要求的属性或方法
+// 可选要求用在你需要和 Objective-C 打交道的代码中
 // 兼容ObjectC使用，添加关键字【@objc】【optional】
 @objc protocol CounterDataSource {
-    // 整个方法都是可选的((Int) -> Int)?，不是 返回值可选
+    // 整个方法都是可选的((Int) -> Int)?
+    // 不是 返回值可选
     @objc optional func increment(forCount count: Int) -> Int
     @objc optional var fixedIncrement: Int { get }
 }
@@ -444,6 +446,18 @@ extension RandomNumberGeneratorTest {
 // 这些限制条件写在协议名之后，使用【where】子句来描述
 
 // 例：扩展 Collection协议
+// 限定：Equatable 比较
+extension Collection where Element: Equatable {
+    func allEqual() -> Bool {
+        for element in self {
+            if element != self.first {
+                return false
+            }
+        }
+        return true
+    }
+}
+
 // 限定：“只适用于集合中的元素遵循了 TextRepresentable 协议”
 extension Collection where Iterator.Element: TextRepresentable {
     var textualDescription: String {
@@ -466,6 +480,57 @@ func collertionProtocol() {
 // *** 如果一个协议 写了多个 协议扩展+限定条件（提供了相同方法的默认实现），且遵循该协议的类型 都符合这些限定条件，
 // *** 那么该类型，将会使用“限制条件最多”的那个协议扩展提供的 默认实现
 
+
+/// 使用综合实现来采纳协议 Adopting a Protocol Using a Synthesized Implementation
+// Swift 在大多数简单情况下能自动提供 Equatable 、 Hashable 以及 Comparable 协议遵循。使用这些合成实现意味着你不需要自己去使用大量重复代码实现这些协议需求。
+
+func testSynthesizedImpl() {
+    /*
+     Swift 为以下几种自定义类型提供了 Equatable 协议的合成实现：
+     遵循 Equatable 协议且只有存储属性的结构体。
+     遵循 Equatable 协议且只有关联类型的枚举
+     没有任何关联类型的枚举
+     */
+    struct Vector3D: Equatable {
+        var x = 0.0, y = 0.0, z = 0.0
+    }
+    
+    let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+    let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+    if twoThreeFour == anotherTwoThreeFour {
+        print("These two vectors are also equivalent.")
+    }
+    // 打印 "These two vectors are also equivalent."
+    
+    
+    /*
+     Swift 为以下几种自定义类型提供了 Hashable 协议的合成实现：
+     遵循 Hashable 协议且只有存储属性的结构体。
+     遵循 Hashable 协议且只有关联类型的枚举
+     没有任何关联类型的枚举
+     */
+    enum SkillLevel: Comparable {
+        case beginner
+        case intermediate
+        case expert(stars: Int)
+    }
+    var levels = [SkillLevel.intermediate, SkillLevel.beginner,
+                  SkillLevel.expert(stars: 5), SkillLevel.expert(stars: 3)]
+    for level in levels.sorted() {
+        print(level)
+    }
+    // 打印 "beginner"
+    // 打印 "intermediate"
+    // 打印 "expert(stars: 3)"
+    // 打印 "expert(stars: 5)"
+}
+
+
+
+
+
+
+
 // —————————————————————————————————————————————————————————————————
 
 /// <-------------------------- protocols do not conform to themselves --------------------------->
@@ -475,6 +540,7 @@ protocol Protocol_1 {
 }
 
 protocol Protocol_A {}
+
 struct SomeStruct_2: Protocol_A {}
 
 struct SomeStruct_1: Protocol_1 {

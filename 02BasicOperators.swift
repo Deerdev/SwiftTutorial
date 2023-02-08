@@ -1,9 +1,9 @@
 //
 //  02BasicOperators.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/2/1.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/2/1.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -49,6 +49,21 @@ func basicOperators() -> Void {
     for index in 1..<5 {
         print("\(index) times 5 is \(index * 4)")
     }
+    // 数组区间
+    let names = ["Anna", "Alex", "Brian", "Jack"]
+    for name in names[2...] {
+        print(name)
+    }
+    /*
+     // Brian
+     // Jack
+     */
+    
+    // 直接赋值
+    let range = ...5
+    range.contains(7)   // false
+    range.contains(4)   // true
+    
     
     /// 4.三目运算符
     let xx = 10

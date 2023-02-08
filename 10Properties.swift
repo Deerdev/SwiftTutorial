@@ -1,9 +1,9 @@
 //
 //  10Properties.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/3/29.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/3/29.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -172,8 +172,92 @@ class SomeClasses {
 // 访问类属性: 类名.属性( SomeStructure.storedTypeProperty )
 
 
+/// 属性包装器
+// 在存储和定义属性的代码之间添加了一个分隔层，wrappedValue为真实值
+@propertyWrapper
+struct SmallNumber {
+    private var maximum: Int
+    private var number = 0
+    /// 从属性包装器中呈现一个值 「包装器的被呈现值」
+    // 通过 $<name> 访问
+    private(set) var projectedValue: Bool
+    var wrappedValue: Int {
+        get { return number }
+        set {
+            if newValue > 12 {
+                number = 12
+                projectedValue = true
+            } else {
+                number = newValue
+                projectedValue = false
+            }
+        }
+    }
+//    var wrappedValue: Int {
+//        get { return number }
+//        set { number = min(newValue, 12) }
+//    }
+    
+    /// 设置被包装属性的初始值
+    // 初始化构造器
+    init() {
+        maximum = 12
+        number = 0
+        projectedValue = false
+    }
+    init(wrappedValue: Int) {
+        maximum = 12
+        number = min(wrappedValue, maximum)
+        projectedValue = false
+    }
+    init(wrappedValue: Int, maximum: Int) {
+        self.maximum = maximum
+        number = min(wrappedValue, maximum)
+        projectedValue = false
+    }
+}
+
+struct SmallRectangle {
+    // 被包裹属性最大不超过 12
+    // 使用 init() 构造器
+    @SmallNumber var height: Int
+    @SmallNumber var width: Int
+    
+    // 使用 init(wrappedValue:) 构造器
+    @SmallNumber var height1: Int = 1
+    @SmallNumber var width1: Int = 1
+    
+    // 使用 init(wrappedValue:maximum:) 构造器:
+    @SmallNumber(wrappedValue: 2, maximum: 5) var height2: Int
+    @SmallNumber(wrappedValue: 3, maximum: 4) var width2: Int
+    // 当包含属性包装器实参时，你也可以使用赋值来指定初始值。
+    @SmallNumber(maximum: 9) var width3: Int = 2   // 依然使用 init(wrappedValue:maximum:) 构造器
+}
+
+func testSomeStructure() {
+    struct SomeStructure {
+        @SmallNumber var someNumber: Int
+    }
+    var someStructure = SomeStructure()
+    someStructure.someNumber = 4
+    /// 使用同名 + $ 前缀，访问 「包装器的被呈现值」
+    print(someStructure.$someNumber)
+    // 打印 "false", projectedValue=false
+
+    someStructure.someNumber = 55
+    print(someStructure.$someNumber)
+    // 打印 "true", projectedValue=true
+}
 
 
+/// 属性包装器 也可以用于全局变量和局部变量。
+// 全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
+func someFunction() {
+    @SmallNumber var myNumber: Int = 0
 
+    myNumber = 10
+    // 这时 myNumber 是 10
 
-
+    myNumber = 24
+    // 这时 myNumber 是 12
+}

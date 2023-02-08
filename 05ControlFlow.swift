@@ -1,9 +1,9 @@
 //
 //  05ControlFlow.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/3/7.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/3/7.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -15,12 +15,25 @@ func forinLoopInfo() -> Void {
     for _ in 1...5 {
         x += 1 // ++运算符被3.0移除
     }
+    
+    /// 使用 stride(from:to:by:) 函数跳过间隔
+    let minutes = 60
+    let minuteInterval = 5
+    for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
+        // 每5分钟渲染一个刻度线（0, 5, 10, 15 ... 45, 50, 55）
+    }
 }
 
 func whilerepeatLoop() -> Void {
     let condition = 5
     var x = 0
     
+    /// while
+    while condition > x {
+        x += 1
+    }
+    
+    /// Repeat-While
     repeat {
         x += 1
     } while condition > x
@@ -170,6 +183,13 @@ func checkAPIAvailable() -> Void {
 //        // APIs 可用，语句将执行
 //    } else {
 //        // APIs 不可用，语句将不执行
+//    }
+//    if #available(iOS 10, *){
+//    } else {
+//        //回滚代码
+//    }
+//    if #unavailable(iOS 10) {
+//        //回滚代码
 //    }
     
 }

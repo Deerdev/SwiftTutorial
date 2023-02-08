@@ -1,9 +1,9 @@
 //
 //  GCDBySwift.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/12/11.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/12/11.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Cocoa

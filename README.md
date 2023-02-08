@@ -1,15 +1,11 @@
 
-- 把《The Swift Programming Language》写到代码里
-  - 已完成
-  - swift5
- 
-- 阅读说明：
-  - 已掌握Objc
-  - 去除了部分基础的语法知识
-  
-- 推荐学习网站：[https://www.boxueio.com/](https://www.boxueio.com/)
-  - 正在看，持续更新
+- 《The Swift Programming Language》to code
 
-- 搭配：修改Xcode注释颜色
 
-![配色](XcodeTheme.png)
+- Change Xcode theme of `Documentation Markup`
+
+![Theme](XcodeTheme.png)
+
+- Swift change log
+
+[Swift 版本历史记录 - SwiftGG](https://swiftgg.gitbook.io/swift/huan-ying-shi-yong-swift/04_revision_history)

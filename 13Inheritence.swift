@@ -1,9 +1,9 @@
 //
 //  13Inheritence.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/3/31.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/3/31.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -59,6 +59,14 @@ class Car: Vehicle {
 /// 重写属性观察器 Overriding Property Observers
 // 不可以 为继承来的 [常量存储]型属性或 继承来的[只读计算]型属性添加属性观察器
 // *** 不可以 同时提供重写的 setter 和重写的 属性观察器 ***(在setter中也可以观察)
+class AutomaticCar: Car {
+    override var currentSpeed: Double {
+        didSet {
+            gear = Int(currentSpeed / 10.0) + 1
+        }
+    }
+}
+
 
 /// 防止重写 Preventing Overrides
 // 可以通过把方法，属性或下标标记为【final】来防止它们被重写 （例如：final var，final func，final class func，以及final subscript）

@@ -1,9 +1,9 @@
 //
 //  01Basics.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/1/30.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/1/30.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -122,10 +122,17 @@ func basicDefination() -> Void {
     */
     
     /// 断言assertion
-    let age = 3
+    let age = 3, indexx = 0
     // 条件为真，继续运行；
     // 条件为假，停止运行，打印第二个参数
     assert(age >= 0, "A person's age can't be less than zero")
+    assert(age >= 0)
+    // 直接断言失败 `assertionFailure(_:file:line:)`
+    assertionFailure("A person's age can't be less than zero.")
+    
+    // 先决判断: 使用全局 precondition(_:_:file:line:) 函数来写一个先决条件, 当表达式的结果为 false 的时候这条信息会被显示(显式信息不报错)
+    precondition(indexx > 0, "Index must be greater than zero.")
+    // `preconditionFailure(_:file:line:)` 方法来表明出现了一个错误，例如，switch 进入了 default 分支，但是所有的有效值应该被任意一个其他分支（非 default 分支）处理。
 
     /// ==========Swift4.2==========
     /// Bool .toggle(), 给Bool取反

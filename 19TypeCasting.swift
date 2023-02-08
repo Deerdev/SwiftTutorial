@@ -1,9 +1,9 @@
 //
 //  19TypeCasting.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/4/5.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/4/5.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -81,7 +81,7 @@ func downCastingAS() {
 
 /**
  * Any 可以表示任何类型，包括函数类型。
- * AnyObject 可以表示任何类类型的实例。
+ * AnyObject 可以表示任何「类」类型的实例。
 **/
 
 func anyAndAnyObject() {

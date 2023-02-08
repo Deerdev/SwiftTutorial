@@ -1,9 +1,9 @@
 //
 //  06Functions.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/3/14.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/3/14.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -57,6 +57,12 @@ func testminMaxOptional() -> Void {
     }
 }
 
+/// 隐式返回的函数：单行表达式，返回表达式的值
+func greeting(for person: String) -> String {
+    "Hello, " + person + "!"
+}
+
+
 /// 函数参数的定义: (标签 变量名: 变量类型)
 //func someFunction(argumentLabel parameterName: Int)
 
@@ -77,7 +83,7 @@ func someFunction2(parameterWithoutDefault: Int, parameterWithDefault: Int = 12)
 // someFunction2(parameterWithoutDefault:3)
 
 /// 可变参数 Variadic Parameters
-// 每个函数只能有一个可变参数
+// 每个函数只能有一个可变参数 arithmeticMean(1, 2, 3, 4, 5)
 func arithmeticMean(_ numbers: Double...) -> Double {
     // 参数在内部是一个数组
     var total: Double = 0

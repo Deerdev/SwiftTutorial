@@ -1,9 +1,9 @@
 //
 //  07Closures.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/3/17.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/3/17.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -88,6 +88,23 @@ func trailingTest() {
         return output
     }
     
+    /// 如果一个函数接受多个闭包，您需要省略第一个尾随闭包的参数标签，并为其余尾随闭包添加标签。例如，以下函数将为图片库加载一张
+    /*
+    func loadPicture(from server: Server, completion:(Picture) -> Void, onFailure: () -> Void) {
+        if let picture = download("photo.jpg", from: server){
+            completion(picture)
+        }else{
+            onFailure()
+        }
+    }
+    
+    // completion 标签隐藏
+    loadPicture(from: someServer){ picture in
+        someView.currentPicture = picture
+    } onFailure: {
+        print("Couldn't download the next picture.")
+    }
+    */
 }
 
 /// 值捕获 Capturing values
@@ -154,12 +171,26 @@ func someClassTest() {
 // ---- ---------------
 
 /// 自动闭包 Autoclosures
-// 自动闭包是一种自动创建的闭包，用于包装传递给函数作为参数的表达式。
-// 这种闭包 “不接受任何参数”，当它被调用的时候，会返回被包装在其中的表达式的值。
-// 这种便利语法让你能够 省略 闭包的“花括号”，用一个普通的表达式来代替显式的闭包。
-// 参数使用 @autocloseure 表示
 func autoClosureTest() {
+    // 自动闭包是一种自动创建的闭包，用于包装传递给函数作为参数的表达式。
+    // 这种闭包 “不接受任何参数”，当它被调用的时候，会返回被包装在其中的表达式的值。
     var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    print(customersInLine.count)
+    // 打印出“5”
+
+    let customerProvider = { customersInLine.remove(at: 0) }
+    print(customersInLine.count)
+    // 打印出“5”
+
+    print("Now serving \(customerProvider())!")
+    // 打印出“Now serving Chris!”
+    print(customersInLine.count)
+    // 打印出“4”
+    
+    
+    // 这种便利语法让你能够 省略 闭包的“花括号”，用一个普通的表达式来代替显式的闭包。
+    // 参数使用 @autocloseure 表示
+    customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
     func serve(customer customerProvider: @autoclosure () -> String) {
         print("Now serving \(customerProvider())!")
     }

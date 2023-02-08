@@ -1,9 +1,9 @@
 //
 //  08Enumerations.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/3/26.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/3/26.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -115,7 +115,21 @@ func testMultiply() {
     let four = ArithmeticExpression.number(4)
     let sum = ArithmeticExpression.addition(five, four)
     let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
-    print("(5+4)*2 : \(product)")
+    print("(5+4)*2 : \(product)") // 只是表达式
+    
+    print(evaluate(product)) // 计算表达式
+    // 打印“18”
+}
+
+func evaluate(_ expression: ArithmeticExpression) -> Int {
+    switch expression {
+    case let .number(value):
+        return value
+    case let .addition(left, right):
+        return evaluate(left) + evaluate(right)
+    case let .multiplication(left, right):
+        return evaluate(left) * evaluate(right)
+    }
 }
 
 

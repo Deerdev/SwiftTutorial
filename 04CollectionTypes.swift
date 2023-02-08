@@ -1,9 +1,9 @@
 //
 //  04CollectionTypes.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/3/6.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/3/6.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -42,7 +42,7 @@ func arraryInfo() -> Void {
     print(threeDoubles)
     print(threeInt)
     
-    // ** slice初始化 **
+    /// ** slice初始化 **
     // +---------+---+
     // | length  | 5 |
     // +---------+---+
@@ -154,8 +154,8 @@ func arraryInfo() -> Void {
     /// 获取“满足条件”的元素的分界点
     /// partition(by:)则会根据指定的条件返回一个分界点位置。这个分界点分开的两部分中，前半部分的元素都不满足指定条件；后半部分都满足指定条件。
     var fibonacci = [5, 3, 2, 1, 1, 0]
-    let pivot = fibonacci.partition(by: { $0 < 1 })     // 分解点：5
-//    fibonacci[0 ..< pivot]      // [1，1，2, 3, 5]
+    let pivot = fibonacci.partition(by: { $0 < 1 })     // 分解点：index: 5(不包含)
+//    fibonacci[0 ..< pivot]      // [5, 3, 2, 1, 1]
 //    fibonacci[pivot ..< fibonacci.endIndex]     // [0]
     
     /// 把数组的所有内容，“合并”成某种形式的值

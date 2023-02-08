@@ -1,9 +1,9 @@
 //
 //  12Subscripts.swift
-//  Swift3Tutorial
+//  SwiftTutorial
 //
-//  Created by daoquan on 2017/3/31.
-//  Copyright © 2017年 daoquan. All rights reserved.
+//  Created by deerdev on 2017/3/31.
+//  Copyright © 2017年 deerdev. All rights reserved.
 //
 
 import Foundation
@@ -45,6 +45,7 @@ func dictSubscriptTest() {
 }
 
 /// 多个下标
+// 但是，与函数不同的是，下标不能使用 in-out 参数。
 //subscript(row: Int, column: Int) -> Double {
 //    get {
 //
@@ -54,8 +55,20 @@ func dictSubscriptTest() {
 //    }
 //}
 
+// 使用：matrix[0, 1] = 1.5
 
 
+/// 类型下标: 在这个类型自身上调用的下标（应用在类型 Type 上，不是实例上）
+// `static subscript`
+// class 可以是 `class subscript`
+enum Planet2: Int {
+    case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
+    static subscript(n: Int) -> Planet2 {
+        return Planet2(rawValue: n)!
+    }
+}
+let mars = Planet2[4]
+//print(mars)
 
 
 
