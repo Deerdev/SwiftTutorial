@@ -6,6 +6,8 @@
 //  Copyright © 2023 deerdev. All rights reserved.
 //
 
+import Foundation
+
 /**
  在 Swift 中，一个异步函数可以交出它在某个线程上的运行权，这样另一个异步函数在这个函数被阻塞时就能获得此线程的运行权。但是，Swift并不能确定当异步函数恢复运行时其将在哪条线程上运行。
  */
@@ -22,7 +24,7 @@ func downloadPhoto(named: String) async -> Data {
     return Data()
 }
 
-func show(_ name: String) {
+func show(_ name: Data) {
 }
 
 func testAsync() async {
@@ -44,11 +46,21 @@ func testAsync() async {
 // 代码中被 await 标记的悬点表明当前这段代码可能会暂停等待异步方法或函数的返回。这也被称为让出线程（yielding the thread）
 // 因为在幕后 Swift 会挂起你这段代码在当前线程的执行，转而让其他代码在当前线程执行
 
+// 可以通过调用 `Task.yield()` 来显式地插入挂起点
+// 在处理耗时任务时，可以插入挂起点来让出线程，从而让其他任务运行(如果一直运行，会阻塞主线程，插入挂起点，让出线程，其他任务运行)
+func generateSlideshow(forGallery gallery: String) async {
+    let photos = try! await listPhotos(inGallery: gallery)
+    for photo in photos {
+        // ... 为这张照片渲染一段几秒钟的视频 ...
+        await Task.yield()
+    }
+}
+
 /// 明确地表示这段代码不能加入 await 标记，你可以将这段代码重构为一个同步函数：
 // 防止在必须同步的代码中间插入 await 打断同步代码
 func move(_ photoName: String, from source: String, to destination: String) {
-//    add(photoName, to: destination)
-//    remove(photoName, from: source)
+    //    add(photoName, to: destination)
+    //    remove(photoName, from: source)
 }
 
 func testAsync2() async {
@@ -58,16 +70,27 @@ func testAsync2() async {
     //此时，firstPhoto暂时地同时存在于两个画廊中
     remove(firstPhoto, fromGallery: "Summer Vacation")
      */
-    
+
     // 重构成一个同步函数，无法拆分
     move(firstPhoto, from: "Summer Vacation", to: "Road Trip")
 }
 
+/// Result
+/// 通过 Result 类型来处理错误,可以使用 Result 来存储这个错误，以便将错误交由其他地方的代码来处理
+func listDownloadedPhotos(inGallery: String) throws -> [String] {
+    return []
+}
 
-/// 异步序列（asynchronous sequence）
-// 每次收到一个元素后对其进行处理，而不是等全部收到后再处理
-import Foundation
+func availableRainyWeekendPhotos() -> Result<[String], Error> {
+    return Result {
+        try listDownloadedPhotos(inGallery: "A Rainy Weekend")
+    }
+}
 
+/// 异步序列 AsyncSequence
+/// 想让自己创建的类型使用 for-in 循环需要遵循 Sequence 协议，
+/// 这里也同理，如果想让自己创建的类型使用 for-await-in 循环，就需要遵循 `AsyncSequence` 协议。
+/// 在这里 await 也标注了潜在的挂起点。一个 for-await-in 循环在每一轮迭代的开头都有可能挂起，以便等待序列中下一个元素的就绪
 func testAsyncQue() async throws {
     let handle = FileHandle.standardInput
     for try await line in handle.bytes.lines {
@@ -75,13 +98,8 @@ func testAsyncQue() async throws {
     }
 }
 
-/**
- 想让自己创建的类型使用 for-in 循环需要遵循 Sequence 协议，
- 这里也同理，如果想让自己创建的类型使用 for-await-in 循环，就需要遵循 AsyncSequence 协议。
- */
-
-
 /// 并行的调用异步方法
+/// 短时间内不需要异步函数的返回结果时，使用 async-let 来调用函数。这样任务就可以并行执行。
 func parallelCallingAsyncTask() async {
     let photoNames = ["IMG001", "IMG99", "IMG0404"]
     // 三次调用 downloadPhoto(named:) 都不需要等待前一次调用结束。如果系统有足够的资源，这三次调用甚至都可以同时执行。
@@ -90,9 +108,8 @@ func parallelCallingAsyncTask() async {
     async let thirdPhoto = downloadPhoto(named: photoNames[2])
 
     let photos = await [firstPhoto, secondPhoto, thirdPhoto]
-//    show(photos)
+    //    show(photos)
 }
-
 
 /// 任务和任务组
 // *任务（task)*是一项工作，可以作为程序的一部分并发执行。所有的异步代码都属于某个任务。
@@ -100,7 +117,7 @@ func parallelCallingAsyncTask() async {
 //可以创建一个任务组并且给其中添加子任务，这可以让你对优先级和任务取消有了更多的掌控力，并且可以控制任务的数量。
 func add(_ photo: String, toGalleryNamed name: String) async {}
 func testGroupTask() async {
-    
+
     /// 结构化并发（structured concurrency）- 有父任务
     // 任务是按层级结构排列的。同一个任务组中的任务拥有相同的父任务，并且每个任务都可以添加子任务。由于任务和任务组之间明确的关系，这种方式又被称为结构化并发（structured concurrency）
     await withTaskGroup(of: Data.self) { taskGroup in
@@ -109,20 +126,19 @@ func testGroupTask() async {
             taskGroup.addTask { await downloadPhoto(named: name) }
         }
     }
-    
+
     /// 非结构化任务（unstructured task）
     // Swift 还支持非结构化并发。与任务组中的任务不同的是，非结构化任务（unstructured task）并没有父任务
     // 你能以任何方式来处理非结构化任务以满足你程序的需要，但与此同时，你需要对于他们的正确性付全责。
     // 如果想创建一个在当前 actor 上运行的非结构化任务，需要调用构造器 Task.init(priority:operation:)。
     // 如果想要创建一个不在当前 actor 上运行的非结构化任务（更具体地说就是游离任务（detached task）），需要调用类方法 Task.detached(priority:operation:)。
     // 以上两种方法都能返回一个能让你与任务交互（继续等待结果或取消任务）的任务句柄，如下：
-    let newPhoto = "" // ... 图片数据 ...
+    let newPhoto = ""  // ... 图片数据 ...
     let handle = Task {
         return await add(newPhoto, toGalleryNamed: "Spring Adventures")
     }
     let result = await handle.value
 }
-
 
 /// 任务取消
 /**
@@ -130,7 +146,7 @@ func testGroupTask() async {
  - 抛出如 CancellationError 这样的错误
  - 返回 nil 或者空的集合
  - 返回完成一半的工作
- 
+
  如果想检查任务是否被取消，既可以使用 Task.checkCancellation()（如果任务取消会返回 CancellationError），也可以使用 Task.isCancelled 来判断，继而在代码中对取消进行相应的处理。比如，一个从图库中下载图片的任务需要删除下载到一半的文件并且关闭连接。
  如果想手动执行扩散取消，调用 Task.cancel()。
  */
@@ -156,7 +172,7 @@ func testActor() async {
     let logger = TemperatureLogger(label: "Outdoors", measurement: 25)
     // 当你访问 actor 中的属性或方法时，需要使用 await 来标记潜在的悬点，比如：
     // 访问 logger.max 是一个可能的悬点。因为 actor 在同一时间只允许一个任务访问它的可变状态，如果别的任务正在与 logger 交互，上面这段代码将会在等待访问属性的时候被挂起。
-    print(await logger.max) // 输出 "25"
+    print(await logger.max)  // 输出 "25"
 }
 
 // actor 内部的代码在访问其属性的时候不需要添加 await 关键字
@@ -173,9 +189,6 @@ extension TemperatureLogger {
  在这种情况下，其他的代码读取到了错误的值，因为 actor 的读取操作被夹在 update(with:) 方法中间，而此时数据暂时是无效的。你可以用 Swift 中的 actor 以防止这种问题的发生，因为 actor 在同一时刻只允许有一个任务能访问它的状态，而且只有在被 await 标记为悬点的地方代码才会被打断。因为 update(with:) 方法没有任何悬点，没有其他任何代码可以在更新的过程中访问到数据。
  */
 
-
-
-
 /// 可发送类型
 // 任务和Actor能够帮助你将程序分割为能够安全地并发运行的小块。
 // 在一个任务中，或是在一个Actor实例中，程序包含可变状态的部分（如变量和属性）被称为并发域（Concurrency domain）。
@@ -184,11 +197,11 @@ extension TemperatureLogger {
 /**
  * 你可以通过声明其符合 Sendable 协议来将某个类型标记为可发送类型。
  该协议并不包含任何代码要求，但Swift对其做出了强制的语义要求。总之，有三种方法将一个类型声明为可发送类型：
- 
+
  - 该类型为值类型，且其可变状态由其它可发送数据构成——例如具有存储属性的结构体或是具有关联值的枚举。
  - 该类型不包含任何可变状态，且其不可变状态由其它可发送数据构成——例如只包含只读属性的结构体或类
  - 该类型包含能确保其可变状态安全的代码——例如标记了 @MainActor 的类或序列化了对特定线程/队列上其属性的访问的类。
- 
+
  https://developer.apple.com/documentation/swift/sendable
  */
 
@@ -207,31 +220,3 @@ func testSendable() async {
     let reading = TemperatureReading(measurement: 45)
     await logger.addReading(from: reading)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

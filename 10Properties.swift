@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// Swift中的属性 统一了 OC中的属性和实例方法
 
 /// 存储属性 Stored Properties
@@ -41,9 +40,9 @@ func lazyValueTest() {
     let manager = DataManager()
     manager.data.append("Some data")
     manager.data.append("Some more data")
-// DataImporter 实例的 importer 属性还没有被创建
+    // DataImporter 实例的 importer 属性还没有被创建
 }
-    
+
 /// 计算属性 Computed Properties
 // “类、结构体和枚举可以定义计算属性”
 // 计算属性不直接存储值，而是提供一个 getter 和一个可选的 setter，来间接获取和设置其他属性或变量的值
@@ -71,8 +70,9 @@ struct Rect {
 }
 
 func computedPropTest() {
-    var square = Rect(origin: Point(x: 0.0, y: 0.0),
-                      size: Size(width: 10.0, height: 10.0))
+    var square = Rect(
+        origin: Point(x: 0.0, y: 0.0),
+        size: Size(width: 10.0, height: 10.0))
     let initialSquareCenter = square.center
     square.center = Point(x: 15.0, y: 15.0)
     print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
@@ -123,19 +123,17 @@ class StepCounter {
         }
         //同样，didSet 观察器会将旧的属性值作为参数传入，可以为该参数命名或者使用默认参数名 oldValue。如果在 didSet 方法中再次对该属性赋值，那么新值会覆盖旧的值。
         didSet {
-            if totalSteps > oldValue  {
+            if totalSteps > oldValue {
                 print("Added \(totalSteps - oldValue) steps")
             }
-            
+
             // 在 didSet 属性观察器将 属性值 再次赋值时，[不会]造成属性观察器被再次调用。
             totalSteps = 0
         }
     }
 }
 
-
 /// 全局的常量或变量 都是延迟计算的，跟延迟存储属性相似，不同的地方在于，全局的常量或变量不需要标记lazy修饰符。
-
 
 /// 类属性
 // 类型属性用于定义某个类型所有实例共享的数据，类C语言静态常量
@@ -171,14 +169,13 @@ class SomeClasses {
 
 // 访问类属性: 类名.属性( SomeStructure.storedTypeProperty )
 
-
 /// 属性包装器
 // 在存储和定义属性的代码之间添加了一个分隔层，wrappedValue为真实值
 @propertyWrapper
 struct SmallNumber {
     private var maximum: Int
     private var number = 0
-    /// 从属性包装器中呈现一个值 「包装器的被呈现值」
+    /// 从属性包装器中呈现一个值 「包装器的被呈现值」，用于跟踪属性包装器在存储新值之前是否调整了该新值。（是否被包装器调整过）
     // 通过 $<name> 访问
     private(set) var projectedValue: Bool
     var wrappedValue: Int {
@@ -193,11 +190,11 @@ struct SmallNumber {
             }
         }
     }
-//    var wrappedValue: Int {
-//        get { return number }
-//        set { number = min(newValue, 12) }
-//    }
-    
+    //    var wrappedValue: Int {
+    //        get { return number }
+    //        set { number = min(newValue, 12) }
+    //    }
+
     /// 设置被包装属性的初始值
     // 初始化构造器
     init() {
@@ -222,16 +219,16 @@ struct SmallRectangle {
     // 使用 init() 构造器
     @SmallNumber var height: Int
     @SmallNumber var width: Int
-    
+
     // 使用 init(wrappedValue:) 构造器
     @SmallNumber var height1: Int = 1
     @SmallNumber var width1: Int = 1
-    
+
     // 使用 init(wrappedValue:maximum:) 构造器:
     @SmallNumber(wrappedValue: 2, maximum: 5) var height2: Int
     @SmallNumber(wrappedValue: 3, maximum: 4) var width2: Int
     // 当包含属性包装器实参时，你也可以使用赋值来指定初始值。
-    @SmallNumber(maximum: 9) var width3: Int = 2   // 依然使用 init(wrappedValue:maximum:) 构造器
+    @SmallNumber(maximum: 9) var width3: Int = 2  // 依然使用 init(wrappedValue:maximum:) 构造器
 }
 
 func testSomeStructure() {
@@ -240,15 +237,14 @@ func testSomeStructure() {
     }
     var someStructure = SomeStructure()
     someStructure.someNumber = 4
-    /// 使用同名 + $ 前缀，访问 「包装器的被呈现值」
+    /// 使用同名 + $ 前缀，访问 「包装器的被呈现值」，值小，没有被包装器调整过
     print(someStructure.$someNumber)
     // 打印 "false", projectedValue=false
 
-    someStructure.someNumber = 55
+    someStructure.someNumber = 55  // 值大，被包装器调整过
     print(someStructure.$someNumber)
     // 打印 "true", projectedValue=true
 }
-
 
 /// 属性包装器 也可以用于全局变量和局部变量。
 // 全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。

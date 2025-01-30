@@ -20,7 +20,7 @@ func enumDefine() {
     var directionToHead = CompassPoint.west
     // swift 已经可以推导directionToHead的类型，直接使用.east
     directionToHead = .east
-    
+
     directionToHead = .south
     // switch语句相同
     switch directionToHead {
@@ -51,15 +51,23 @@ func barcodeTest() {
     var productBarcode = Barcode.upc(8, 85909, 51226, 3)
     // 赋值为 二维码
     productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
-    
+
     // switch内部 用变量提取关联值 直接使用
     switch productBarcode {
-        // 成员变量被提取为常量（也可以提取为变量 var）
-        case .upc(let numberSystem, let manufacturer, let product, let check):
-            print("UPC: \(numberSystem), \(manufacturer), \(product), \(check).")
-        // 如果一个枚举成员的所有关联值都被提取为常量，或者都被提取为变量，为了简洁，你可以只在成员 名称前 标注一个let或者var：
-        case let .qrCode(productCode):
-            print("QR code: \(productCode).")
+    // 成员变量被提取为常量（也可以提取为变量 var）
+    case .upc(let numberSystem, let manufacturer, let product, let check):
+        print("UPC: \(numberSystem), \(manufacturer), \(product), \(check).")
+    // 如果一个枚举成员的所有关联值都被提取为常量，或者都被提取为变量，为了简洁，你可以只在成员 名称前 标注一个let或者var：
+    case let .qrCode(productCode):
+        print("QR code: \(productCode).")
+    }
+
+    // 简洁写法
+    switch productBarcode {
+    case let .upc(numberSystem, manufacturer, product, check):
+        print("UPC : \(numberSystem), \(manufacturer), \(product), \(check).")
+    case let .qrCode(productCode):
+        print("QR code: \(productCode).")
     }
 }
 
@@ -77,7 +85,8 @@ enum ASCIIControlCharacter: Character {
 // 在使用原始值为整数或者字符串类型的枚举时，不需要显式地为每一个枚举成员设置原始值，Swift 将会自动为你赋值。
 // Int默认从0开始
 enum Planet: Int {
-    case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
+    case mercury = 1
+    case venus, earth, mars, jupiter, saturn, uranus, neptune
 }
 
 // 当使用字符串作为枚举类型的原始值时，每个枚举成员的隐式原始值为该枚举成员的名称。
@@ -87,11 +96,11 @@ enum CompassPointStr: String {
 }
 
 // 使用枚举成员的rawValue属性可以访问该枚举成员的原始值：
-let earthsOrder = Planet.earth.rawValue // earthsOrder 值为 3
-let sunsetDirection = CompassPointStr.west.rawValue // sunsetDirection 值为 "west
+let earthsOrder = Planet.earth.rawValue  // earthsOrder 值为 3
+let sunsetDirection = CompassPointStr.west.rawValue  // sunsetDirection 值为 "west
 
 //使用原始值初始化 枚举实例 （返回 【可选类型】）
-let possiblePlanet = Planet(rawValue: 7) // possiblePlanet 类型为 Planet? 值为 Planet.uranus
+let possiblePlanet = Planet(rawValue: 7)  // possiblePlanet 类型为 Planet? 值为 Planet.uranus
 
 /// 递归枚举 Recursive Enumerations
 // 一个或多个枚举成员使用该枚举类型的实例作为关联值
@@ -115,9 +124,9 @@ func testMultiply() {
     let four = ArithmeticExpression.number(4)
     let sum = ArithmeticExpression.addition(five, four)
     let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
-    print("(5+4)*2 : \(product)") // 只是表达式
-    
-    print(evaluate(product)) // 计算表达式
+    print("(5+4)*2 : \(product)")  // 只是表达式
+
+    print(evaluate(product))  // 计算表达式
     // 打印“18”
 }
 
@@ -132,7 +141,6 @@ func evaluate(_ expression: ArithmeticExpression) -> Int {
     }
 }
 
-
 /// ======swift4.2======
 /// 遍历enum：让enum自身遵从protocol CaseIterable：
 enum Shape: CaseIterable {
@@ -142,7 +150,7 @@ enum Shape: CaseIterable {
 }
 
 func testEnumIterable() {
-    Shape.allCases // [rectangle, circle, triangle]
+    Shape.allCases  // [rectangle, circle, triangle]
 }
 
 // 如果enum中有关联值, 就无法使用allClass，因为关联值导致enum是无穷尽的值
