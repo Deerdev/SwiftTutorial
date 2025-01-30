@@ -53,6 +53,7 @@ func generateSlideshow(forGallery gallery: String) async {
     for photo in photos {
         // ... 为这张照片渲染一段几秒钟的视频 ...
         await Task.yield()
+
     }
 }
 
