@@ -121,11 +121,22 @@ func testGroupTask() async {
 
     /// 结构化并发（structured concurrency）- 有父任务
     // 任务是按层级结构排列的。同一个任务组中的任务拥有相同的父任务，并且每个任务都可以添加子任务。由于任务和任务组之间明确的关系，这种方式又被称为结构化并发（structured concurrency）
-    await withTaskGroup(of: Data.self) { taskGroup in
+    // 如果代码可能抛出错误，你需要调用 withThrowingTaskGroup(of:returning:body:)。
+    let results = await withTaskGroup(of: Data.self) { taskGroup in
         let photoNames = try! await listPhotos(inGallery: "Summer Vacation")
         for name in photoNames {
             taskGroup.addTask { await downloadPhoto(named: name) }
         }
+        var results: [Data] = []
+        for await photo in group {
+            results.append(photo)
+        }
+        return results
+
+        // 无返回值
+        // for await photo in taskGroup {
+        //     show(photo)
+        // }
     }
 
     /// 非结构化任务（unstructured task）
@@ -151,8 +162,41 @@ func testGroupTask() async {
  如果想检查任务是否被取消，既可以使用 Task.checkCancellation()（如果任务取消会返回 CancellationError），也可以使用 Task.isCancelled 来判断，继而在代码中对取消进行相应的处理。比如，一个从图库中下载图片的任务需要删除下载到一半的文件并且关闭连接。
  如果想手动执行扩散取消，调用 Task.cancel()。
  */
+let photos = await withTaskGroup(of: Optional<Data>.self) { group in
+    let photoNames = await listPhotos(inGallery: "Summer Vacation")
+    for name in photoNames {
+        let added = group.addTaskUnlessCancelled {
+            guard !Task.isCancelled else { return nil }
+            return await downloadPhoto(named: name)
+        }
+        guard added else { break }
+    }
 
-/// Actors
+
+    var results: [Data] = []
+    for await photo in group {
+        if let photo { results.append(photo) }
+    }
+    return results
+}
+/**
+- 每项任务都使用 TaskGroup.addTaskUnlessCancelled(priority:operation:) 方法来添加, 以避免在任务取消之后产生新的任务。
+- 在每次调用 addTaskUnlessCancelled(priority:operation:) 之后, 这段代码都会确认子任务的确已经添加成功了。如果任务组已被取消，那么 added 的值就会为 false —— 这种情况下，代码会不再尝试下载更多的照片。
+- 每项任务都会在开始下载照片前，检查取消指令。如果发现任务已被取消，那么返回 nil。
+- 最后，任务组在收集结果时会跳过所有的 nil。通过返回 nil 来响应取消指令意味着任务组可以返回部分结果（也就是在取消的那一刻之前已经下载完成的照片），而不是将已完成的工作也一并丢弃。
+*/
+
+// 如果你的事务需要在被取消时立即收到提醒，可以使用 Task.withTaskCancellationHandler(operation:onCancel:isolation:) 方法。例如：
+let task = await Task.withTaskCancellationHandler {
+    // ...
+} onCancel: {
+    print("Canceled!")
+}
+// ... 一段时间之后 ...
+task.cancel()  // 输出 "Canceled!"
+
+
+/// Actors: 共享变量
 // 你可以使用任务来将自己的程序分割为孤立、并发的部分。
 // 任务间相互孤立，这也使得它们能够安全地同时运行。但有时你需要在任务间共享信息。
 // Actors便能够帮助你安全地在并发代码间分享信息。
@@ -171,9 +215,11 @@ actor TemperatureLogger {
 
 func testActor() async {
     let logger = TemperatureLogger(label: "Outdoors", measurement: 25)
-    // 当你访问 actor 中的属性或方法时，需要使用 await 来标记潜在的悬点，比如：
-    // 访问 logger.max 是一个可能的悬点。因为 actor 在同一时间只允许一个任务访问它的可变状态，如果别的任务正在与 logger 交互，上面这段代码将会在等待访问属性的时候被挂起。
+    // 当你访问 actor 中的属性或方法时，需要使用 await 来标记潜在的挂起点，比如：
+    // 访问 logger.max 是一个可能的挂起点。因为 actor 在同一时间只允许一个任务访问它的可变状态，如果别的任务正在与 logger 交互，上面这段代码将会在等待访问属性的时候被挂起。
     print(await logger.max)  // 输出 "25"
+
+    // 不加 await 访问 logger.max 会失败,编译器报错
 }
 
 // actor 内部的代码在访问其属性的时候不需要添加 await 关键字
@@ -188,9 +234,15 @@ extension TemperatureLogger {
 }
 /*
  在这种情况下，其他的代码读取到了错误的值，因为 actor 的读取操作被夹在 update(with:) 方法中间，而此时数据暂时是无效的。你可以用 Swift 中的 actor 以防止这种问题的发生，因为 actor 在同一时刻只允许有一个任务能访问它的状态，而且只有在被 await 标记为悬点的地方代码才会被打断。因为 update(with:) 方法没有任何悬点，没有其他任何代码可以在更新的过程中访问到数据。
+
+Swift 并发模型的以下几个特点共同降低了使用者对共享可变属性的理解成本：
+    - 挂起点之间的代码总是按顺序执行，且不可能被任何其它并发代码打断。
+    - 与一个 actor 本地状态交互的代码只会运行在这个 actor 之上。
+    - 一个 actor 一次只运行一段代码。
+基于这些保证，处于一个 actor 之内、且不包含 await 的方法(同步方法，不包含任何挂起点)可以安全地对 actor 状态进行更新，而不用担心程序中的其它部分意外读取到不合法状态。
  */
 
-/// 可发送类型
+/// 可发送类型：可作为Actor方法的参数传递
 // 任务和Actor能够帮助你将程序分割为能够安全地并发运行的小块。
 // 在一个任务中，或是在一个Actor实例中，程序包含可变状态的部分（如变量和属性）被称为并发域（Concurrency domain）。
 // 部分类型的数据不能在并发域间共享，因为它们包含了可变状态，但它不能阻止重叠访问。
