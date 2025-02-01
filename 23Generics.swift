@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// 1.泛型函数 Generic Functions
 
 // 交换两个变量的值，泛型类型 <T>
@@ -25,14 +24,13 @@ func genericsSwapTest() {
     // 交换Int
     swapTwoValues(&someInt, &anotherInt)
     // someInt is now 107, and anotherInt is now 3
-    
+
     var someString = "hello"
     var anotherString = "world"
     // 交换String
     swapTwoValues(&someString, &anotherString)
     // someString is now "world", and anotherString is now "hello"
 }
-
 
 /// 2.泛型类型 Generic Types
 // 栈的泛型版本 <Element>
@@ -47,7 +45,6 @@ struct Stack<Element> {
 }
 // 存储String类型
 var stackOfStrings = Stack<String>()
-
 
 /// 3.扩展 泛型类型 Extending a Generic Type
 // 扩展一个 泛型类型 的时候，你并不需要在扩展的定义中 提供类型参数列表，参数列表在扩展中 可以直接使用
@@ -74,10 +71,10 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
 // Container协议 定义了一个关联类型 ItemType
 protocol Container {
     // 关联类型
-    associatedtype ItemType
-    mutating func append(_ item: ItemType)
+    associatedtype Item
+    mutating func append(_ item: Item)
     var count: Int { get }
-    subscript(i: Int) -> ItemType { get }
+    subscript(i: Int) -> Item { get }
 }
 
 struct IntStack: Container {
@@ -89,11 +86,11 @@ struct IntStack: Container {
     mutating func pop() -> Int {
         return items.removeLast()
     }
-    
+
     // Container协议的实现
     // ** 指定ItermType的类型 **
-    typealias ItemType = Int // 因为Swift可以通过类型推断，所以 该行可以省略
-    
+    typealias ItemType = Int  // 因为Swift可以通过类型推断，所以 该行可以省略
+
     mutating func append(_ item: Int) {
         self.push(item)
     }
@@ -137,7 +134,6 @@ protocol ContainerX {
     var count: Int { get }
     subscript(i: Int) -> Item { get }
 }
- 
 
 /// 在关联类型约束里使用协议
 // 在这个协议里，Suffix 是一个关联类型，就像上边例子中 Container 的 Item 类型一样。
@@ -147,7 +143,6 @@ protocol SuffixableContainer: ContainerX {
     associatedtype Suffix: SuffixableContainer where Suffix.Item == Item
     func suffix(_ size: Int) -> Suffix
 }
-
 
 /// 6.扩展现有类型来指定关联类型 “Extending an Existing Type to Specify an Associated Type”
 
@@ -159,30 +154,31 @@ extension Array: Container {}
 // 在参数列表中通过 where 子句为[关联类型]定义约束
 // where 子句后跟一个或者多个针对 关联类型 的约束，以及一个或多个类型参数和关联类型间的相等关系
 
-func allItemsMatch<C1: Container, C2: Container>(_ someContainer: C1, _ anotherContainer: C2) -> Bool
-    where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
-        
-        /**
+func allItemsMatch<C1: Container, C2: Container>(_ someContainer: C1, _ anotherContainer: C2)
+    -> Bool
+where C1.Item == C2.Item, C1.Item: Equatable {
+
+    /**
         C1 必须符合 Container 协议（写作 C1: Container）。
         C2 必须符合 Container 协议（写作 C2: Container）。
-        C1 的 ItemType 必须和 C2 的 ItemType类型相同（写作 C1.ItemType == C2.ItemType）。
-        C1 的 ItemType 必须符合 Equatable 协议（写作 C1.ItemType: Equatable）。
+        C1 的 Item 必须和 C2 的 Item C1.Item == C2.Item
+        C1 的 Item 必须符合 Equatable 协议（写作 C1.Item: Equatable）。
         **/
-        
-        // Check that both containers contain the same number of items.
-        if someContainer.count != anotherContainer.count {
+
+    // Check that both containers contain the same number of items.
+    if someContainer.count != anotherContainer.count {
+        return false
+    }
+
+    // Check each pair of items to see if they are equivalent.
+    for i in 0..<someContainer.count {
+        if someContainer[i] != anotherContainer[i] {
             return false
         }
-        
-        // Check each pair of items to see if they are equivalent.
-        for i in 0..<someContainer.count {
-            if someContainer[i] != anotherContainer[i] {
-                return false
-            }
-        }
-        
-        // All items match, so return true.
-        return true
+    }
+
+    // All items match, so return true.
+    return true
 }
 
 /// 8.带有泛型 Where 分句的扩展 “Extensions with a Generic Where Clause”
@@ -195,21 +191,20 @@ extension Stack where Element: Equatable {
     }
 }
 
-
 //protocol Container {
 //    // 关联类型
-//    associatedtype ItemType
-//    mutating func append(_ item: ItemType)
+//    associatedtype Item
+//    mutating func append(_ item: Item)
 //    var count: Int { get }
-//    subscript(i: Int) -> ItemType { get }
+//    subscript(i: Int) -> Item { get }
 //}
 
-extension Container where ItemType: Equatable {
-    func startsWith(_ item: ItemType) -> Bool {
+extension Container where Item: Equatable {
+    func startsWith(_ item: Item) -> Bool {
         return count >= 1 && self[0] == item
     }
 }
-extension Container where ItemType == Double {
+extension Container where Item == Double {
     func average() -> Double {
         var sum = 0.0
         for index in 0..<count {
@@ -239,7 +234,7 @@ extension Container2 {
         return sum / Double(count)
     }
     func endsWith(_ item: Item) -> Bool where Item: Equatable {
-        return count >= 1 && self[count-1] == item
+        return count >= 1 && self[count - 1] == item
     }
 }
 //let numbers = [1260, 1200, 98, 37]
@@ -256,7 +251,7 @@ protocol Container3 {
     mutating func append(_ item: Item)
     var count: Int { get }
     subscript(i: Int) -> Item { get }
-    
+
     // 迭代器（Iterator）的泛型 where 子句要求：无论迭代器是什么类型，迭代器中的元素类型，必须和容器项目的类型保持一致。
     associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
     // makeIterator() 则提供了容器的迭代器的访问接口。
@@ -265,20 +260,19 @@ protocol Container3 {
 
 // 一个协议继承了另一个协议，你通过在协议声明的时候，包含泛型 where 子句，来添加了一个约束到被继承协议的关联类型。
 // 例如，下面的代码声明了一个 ComparableContainer 协议，它要求所有的 Item 必须是 Comparable 的。
-protocol ComparableContainer: Container3 where Item: Comparable { }
-
+protocol ComparableContainer: Container3 where Item: Comparable {}
 
 /// 泛型下标
 // 下标可以是泛型，它们能够包含泛型 where 子句。
 // 你可以在 subscript 后用尖括号来写占位符类型，你还可以在下标代码块花括号前写 where 子句
 extension Container3 {
     subscript<Indices: Sequence>(indices: Indices) -> [Item]
-        where Indices.Iterator.Element == Int {
-            var result: [Item] = []
-            for index in indices {
-                result.append(self[index])
-            }
-            return result
+    where Indices.Iterator.Element == Int {
+        var result: [Item] = []
+        for index in indices {
+            result.append(self[index])
+        }
+        return result
     }
 }
 /*
@@ -286,8 +280,6 @@ extension Container3 {
  - 在尖括号中的泛型参数 Indices，必须是符合标准库中的 Sequence 协议的类型。
  - 下标使用的单一的参数，indices，必须是 Indices 的实例。
  - 泛型 where 子句要求 Sequence（Indices）的迭代器，其所有的元素都是 Int 类型。这样就能确保在序列（Sequence）中的索引和容器（Container）里面的索引类型是一致的。
- 
+
  综合一下，这些约束意味着，传入到 indices 下标，是一个整型的序列。
  */
-
-

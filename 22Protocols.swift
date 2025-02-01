@@ -52,7 +52,7 @@ class Starship: FullyNamed {
         self.name = name
         self.prefix = prefix
     }
-    
+
     // 实现为计算属性
     var fullName: String {
         return (prefix != nil ? prefix! + " " : "") + name
@@ -79,12 +79,12 @@ class LinearCongruentialGenerator: RandomNumberGeneratorTest {
     let m = 139968.0
     let a = 3877.0
     let c = 29573.0
-    
+
     // 实现协议定义的 实例方法
     func random() -> Double {
         // lastRandom = ((lastRandom * a + c) % m)
         // 浮点型的 取余，不能使用 %
-        lastRandom = ((lastRandom * a + c).truncatingRemainder(dividingBy:m))
+        lastRandom = ((lastRandom * a + c).truncatingRemainder(dividingBy: m))
         return lastRandom / m
     }
 }
@@ -110,7 +110,6 @@ enum OnOffSwitch: Togglable {
     }
 }
 
-
 /// 5.构造器要求 Initializer Requirements
 // 协议可以要求遵循协议的类型实现 指定的构造器
 protocol SomeProtocol2 {
@@ -122,7 +121,7 @@ class SomeClass2: SomeProtocol2 {
     required init(someParameter: Int) {
         // initializer implementation goes here
     }
-    
+
     // 如果类已经被标记为【final】，那么 不需要 在协议构造器的实现中使用 required 修饰符
 }
 
@@ -149,10 +148,9 @@ class SomeSubClass3: SomeSuperClass3, SomeProtocol3 {
 // 协议定义 可失败构造器 <---> 类实现方式（init?）或（init）
 // 协议定义 非失败构造器 <---> 类实现方式（init）或（init！）
 
-
 /// 6.协议作为类型 Protocols as Types
 
-/* 
+/*
  * 协议作为类型：
  * 1 作为函数、方法或构造器中的 参数类型 或 返回值类型
  * 2 作为常量、变量或属性的类型
@@ -189,7 +187,6 @@ protocol DiceGameDelegate {
     func gameDidEnd(_ game: DiceGame)
 }
 
-
 class SnakesAndLadders: DiceGame {
     let finalSquare = 25
     let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
@@ -197,21 +194,27 @@ class SnakesAndLadders: DiceGame {
     var board: [Int]
     init() {
         board = Array(repeating: 0, count: finalSquare + 1)
-        board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
-        board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+        board[03] = +08
+        board[06] = +11
+        board[09] = +09
+        board[10] = +02
+        board[14] = -10
+        board[19] = -11
+        board[22] = -02
+        board[24] = -08
     }
-    
+
     // 可选类型的 代理属性
     var delegate: DiceGameDelegate?
     func play() {
         square = 0
-        
+
         // 可选链式 调用委托方法
         delegate?.gameDidStart(self)
-        
+
         gameLoop: while square != finalSquare {
             let diceRoll = dice.roll()
-            
+
             // 可选链式 调用委托方法
             delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
             switch square + diceRoll {
@@ -224,7 +227,7 @@ class SnakesAndLadders: DiceGame {
                 square += board[square]
             }
         }
-        
+
         // 可选链式 调用委托方法
         delegate?.gameDidEnd(self)
     }
@@ -289,13 +292,12 @@ struct Hamster {
 }
 extension Hamster: TextRepresentable {}
 
-
 /// 10.协议类型的集合 “Collections of Protocol Types”
 func protocolArray() {
     let game = SnakesAndLadders()
     let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
     let simonTheHamster = Hamster(name: "Simon")
-    
+
     let things: [TextRepresentable] = [game, d12, simonTheHamster]
     for thing in things {
         // 只能调用协议（类型）定义的方法
@@ -309,12 +311,11 @@ protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
     // protocol definition goes here
 }
 
-
 protocol PrettyTextRepresentable: TextRepresentable {
     var prettyTextualDescription: String { get }
 }
 extension SnakesAndLadders: PrettyTextRepresentable {
-    
+
     // 实现PrettyTextRepresentable要求的 属性
     var prettyTextualDescription: String {
         var output = textualDescription + ":\n"
@@ -332,7 +333,6 @@ extension SnakesAndLadders: PrettyTextRepresentable {
     }
 }
 
-
 /// 12.类 类型 专属协议 Class-Only Protocols
 // 在协议的继承列表中，通过添加【AnyObject】关键字来限制协议只能被类类型遵循，而结构体或枚举不能遵循该协议。
 // AnyObject 关键字必须第一个出现在协议的继承列表中
@@ -343,7 +343,7 @@ protocol SomeClassOnlyProtocol: AnyObject, InheritingProtocol {
 
 // *** 当协议定义的要求 需要遵循协议的类型 "必须是 引用语义" 而非值语义时，应该采用 类 类型专属协议 ***
 
-/// 13.协议合成 Protocol Composition
+/// 13.协议合成/组合 Protocol Composition
 // 将多个协议采用 SomeProtocol & AnotherProtocol 这样的格式进行组合，称为 协议合成（protocol composition）
 
 protocol Named {
@@ -365,11 +365,10 @@ func wishHappyBirthday(to celebrator: Named & Aged) {
 //wishHappyBirthday(to: birthdayPerson)
 
 /// 14.检查协议的一致性 “Checking for Protocol Conformance”
-/**
- * is  用来检查实例是否符合某个协议，若符合则返回 true，否则返回 false。
- * as? 返回一个可选值，当实例符合某个协议时，返回类型为协议类型的可选值，否则返回 nil。
- * as! 将实例强制向下转换到某个协议类型，如果强转失败，会引发运行时错误。
-**/
+/// is  用来检查实例是否符合某个协议，若符合则返回 true，否则返回 false。
+/// as? 返回一个可选值，当实例符合某个协议时，返回类型为协议类型的可选值，否则返回 nil。
+/// as! 将实例强制向下转换到某个协议类型，如果强转失败，会引发运行时错误。
+/// *
 protocol HasArea {
     var area: Double { get }
 }
@@ -388,9 +387,9 @@ class Animal2 {
 func checkProtocol() {
     let objects: [AnyObject] = [
         Circle2(radius: 2.0),
-        Animal2(legs: 4)
+        Animal2(legs: 4),
     ]
-    
+
     for object in objects {
         // 判断 是否都遵循 HasArea协议
         if let objectWithArea = object as? HasArea {
@@ -471,7 +470,7 @@ func collertionProtocol() {
     let morganTheHamster = Hamster(name: "Morgan")
     let mauriceTheHamster = Hamster(name: "Maurice")
     let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
-    
+
     // 数组中的成员都符合 扩展协议的限定条件
     print(hamsters.textualDescription)
     // Prints "[A hamster named Murray, A hamster named Morgan, A hamster named Maurice]"
@@ -479,7 +478,6 @@ func collertionProtocol() {
 
 // *** 如果一个协议 写了多个 协议扩展+限定条件（提供了相同方法的默认实现），且遵循该协议的类型 都符合这些限定条件，
 // *** 那么该类型，将会使用“限制条件最多”的那个协议扩展提供的 默认实现
-
 
 /// 使用综合实现来采纳协议 Adopting a Protocol Using a Synthesized Implementation
 // Swift 在大多数简单情况下能自动提供 Equatable 、 Hashable 以及 Comparable 协议遵循。使用这些合成实现意味着你不需要自己去使用大量重复代码实现这些协议需求。
@@ -494,15 +492,14 @@ func testSynthesizedImpl() {
     struct Vector3D: Equatable {
         var x = 0.0, y = 0.0, z = 0.0
     }
-    
+
     let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
     let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
     if twoThreeFour == anotherTwoThreeFour {
         print("These two vectors are also equivalent.")
     }
     // 打印 "These two vectors are also equivalent."
-    
-    
+
     /*
      Swift 为以下几种自定义类型提供了 Hashable 协议的合成实现：
      遵循 Hashable 协议且只有存储属性的结构体。
@@ -514,8 +511,10 @@ func testSynthesizedImpl() {
         case intermediate
         case expert(stars: Int)
     }
-    var levels = [SkillLevel.intermediate, SkillLevel.beginner,
-                  SkillLevel.expert(stars: 5), SkillLevel.expert(stars: 3)]
+    var levels = [
+        SkillLevel.intermediate, SkillLevel.beginner,
+        SkillLevel.expert(stars: 5), SkillLevel.expert(stars: 3),
+    ]
     for level in levels.sorted() {
         print(level)
     }
@@ -524,12 +523,6 @@ func testSynthesizedImpl() {
     // 打印 "expert(stars: 3)"
     // 打印 "expert(stars: 5)"
 }
-
-
-
-
-
-
 
 // —————————————————————————————————————————————————————————————————
 
@@ -553,6 +546,5 @@ func testFunction<P: Protocol_1>(t: P) where P.T == Protocol_A {}
 
 func testFunction() {
     let struct1 = SomeStruct_1()
-    testFunction(t: struct1) // *Generic parameter 'P' could not be inferred*
+    testFunction(t: struct1)  // *Generic parameter 'P' could not be inferred*
 }
-

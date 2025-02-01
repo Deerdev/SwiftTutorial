@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 /**
  @autoclosure
  @available
@@ -63,13 +64,38 @@ public func calculateSum(a: Int, b: Int) -> Int {
  @_dynamicReplacement 是 Swift 的一个特殊关键字，用于指示函数或方法可以被动态替换。它的作用是允许您在运行时替换函数或方法的实现，而不需要重新编译应用程序。这有助于提高灵活性和可扩展性，并允许您在不更改代码的情况下修改应用程序的行为。
 
  例如：
- 
+
 ```
 @_dynamicReplacement(for: viewDidLoad())
 func myDynamicReplacement() {
  // Implement dynamic replacement logic here.
 }
  ```
- 
+
  在此示例中，函数 myDynamicReplacement 是一个 @_dynamicReplacement 函数，它将动态替换 viewDidLoad 方法。因此，当 viewDidLoad 方法被调用时，实际上会执行 myDynamicReplacement 函数。
  */
+
+/// @available
+// 声明一个函数在iOS 10.0及以上版本可用
+@available(iOS 10.0, *)
+func newFeature() {
+    // Implementation
+}
+
+// 声明一个类在所有平台都不可用
+@available(*, unavailable, message: "Use NewClass instead")
+class OldClass {
+    // Implementation
+}
+
+// 声明一个方法在iOS和macOS平台上都有不同的可用性
+@available(iOS 11.0, macOS 10.13, *)
+func platformSpecificFeature() {
+    // Implementation
+}
+
+// 指定一个函数被替代
+@available(iOS, deprecated: 12.0, renamed: "betterFunction()")
+func oldFunction() {
+    // Implementation
+}

@@ -21,7 +21,7 @@ import Foundation
 class PersonMan {
     let name: String
     init(name: String) { self.name = name }
-    
+
     // 可选类型
     var apartment: Apartment?
     deinit { print("\(name) is being deinitialized") }
@@ -30,30 +30,29 @@ class PersonMan {
 class Apartment {
     let unit: String
     init(unit: String) { self.unit = unit }
-    
+
     // weak 可选类型
     weak var tenant: PersonMan?
     deinit { print("Apartment \(unit) is being deinitialized") }
 }
 
 /*** 对比 ARC 和 垃圾回收机制 ***
- 
+
  * 在使用垃圾收集的系统里，弱指针有时用来实现简单的缓冲机制，因为没有强引用的对象只会在内存压力触发垃圾收集时才被销毁。
- 
+
  * 但是在 ARC 中，一旦值的最后一个强引用被移除，就会被立即销毁，这导致弱引用并不适合上面的用途
 
  **/
 
-
 /// 无主引用（ unowned reference )
 // 非可选类型，始终得有值
 // ARC 无法在实例被释放后将无主引用设为 nil ，因为非可选类型的变量不允许被赋值为 nil 。
+// 需要手动设置为nil的`weak`类型，但是性能比`weak`类型好
 // 试图在实例的被释放后访问无主引用，将触发运行时错误。只有在确保该引用会一直引用实例的时候 才使用无主引用。
-
 
 class Customer {
     let name: String
-    
+
     // Customer销毁后 CreditCard也会被销毁
     // 可选类型
     var card: CreditCard?
@@ -65,7 +64,7 @@ class Customer {
 
 class CreditCard {
     let number: UInt64
-    
+
     // creditCard 在生命周期内 会一直 被Customer 拥有
     unowned let customer: Customer
     init(number: UInt64, customer: Customer) {
@@ -90,7 +89,7 @@ class CreditCard {
 // ** 在这种场景中，需要一个类使用无主属性，而另外一个类使用隐式解析的可选属性。
 class Country {
     let name: String
-    
+
     // 隐式解析，可选类型 （因为初始化后，肯定有值）每个国家必有一个首都
     var capitalCity: City!
     init(name: String, capitalName: String) {
@@ -109,14 +108,13 @@ class City {
     }
 }
 
-
 /// 闭包的循环强引用 “Strong Reference Cycles for Closures”
 // 循环引用 发生在： “当你将一个闭包赋值给类实例的某个属性，并且这个闭包体中又使用了这个类实例时”
 class HTMLElement {
-    
+
     let name: String
     let text: String?
-    
+
     lazy var asHTML: () -> String = {
         // 闭包内强引用 self
         // 尽管闭包多次引用了 self ，它只捕获 HTMLElement 实例的一个强引用。
@@ -126,16 +124,16 @@ class HTMLElement {
             return "<\(self.name) />"
         }
     }
-    
+
     init(name: String, text: String? = nil) {
         self.name = name
         self.text = text
     }
-    
+
     deinit {
         print("\(name) is being deinitialized")
     }
-    
+
 }
 /// 解决闭包循环强引用 “Resolving Strong Reference Cycles for Closures”
 // Swift 要求你在闭包中引用self成员时使用 self.someProperty 或者 self.someMethod （而不只是 someProperty 或 someMethod ）。这有助于提醒你可能会一不小心就捕获了 self 。
@@ -147,17 +145,18 @@ class HTMLElement {
 class weakClosure {
     var delegate: HTMLElement?
     init(delegate: HTMLElement) {
-        self.delegate = delegate;
+        self.delegate = delegate
     }
-    
+
     lazy var someClosure: (Int, String) -> String = {
         // 捕获列表
-        [unowned self, weak delegate = self.delegate!] (index: Int, stringToProcess: String) -> String in
+        [unowned self, weak delegate = self.delegate!] (index: Int, stringToProcess: String)
+            -> String in
         // closure body goes here
         return ""
     }
-    
-    lazy var someClosure2: ()-> String = {
+
+    lazy var someClosure2: () -> String = {
         // 闭包没有参数时
         [unowned self, weak delegate = self.delegate!] in
         // closure body goes here
@@ -174,10 +173,10 @@ class weakClosure {
 
 // ** unowned 类似assign，在对象释放后 不会被置为nil，而是成为野指针
 class HTMLElementSafe {
-    
+
     let name: String
     let text: String?
-    
+
     lazy var asHTML: () -> String = {
         // 添加捕获列表
         [unowned self] in
@@ -187,16 +186,16 @@ class HTMLElementSafe {
             return "<\(self.name) />"
         }
     }
-    
+
     init(name: String, text: String? = nil) {
         self.name = name
         self.text = text
     }
-    
+
     deinit {
         print("\(name) is being deinitialized")
     }
-    
+
 }
 
 // MARK: - 更新
@@ -205,7 +204,7 @@ class HTMLElementSafe {
 /// 捕获列表的实际含义
 
 func captureListForClosure() {
-    var arrayClosure :  [() -> ()] = []
+    var arrayClosure: [() -> Void] = []
     var i = 0
     /// 1.不使用捕获列表(默认捕获 变量的值的引用--即指针本身的内存，不是指针的指向)
     /*
@@ -216,13 +215,12 @@ func captureListForClosure() {
         arrayClosure.append { print(i) }
         i += 1
     }
-    
+
     for j in 0..<arrayClosure.count {
         arrayClosure[j]()
     }
     // 输出 3, 3, 3
-    
-    
+
     i = 0
     arrayClosure.removeAll()
     /// 2.使用捕获列表(捕获变量的值，即指针指向的值)
@@ -235,12 +233,12 @@ func captureListForClosure() {
         }
         i += 1
     }
-    
+
     for j in 0..<arrayClosure.count {
         arrayClosure[j]()
     }
     // 输出 0, 1, 2
-    
+
     /// 捕获一个作为静态copy的变量
     var str = "Hello, playground"
     let show = { [strcopy = str] in
@@ -253,7 +251,7 @@ func captureListForClosure() {
     show()
     // 这是str-----hello
     // 这是strcopy-----Hello, playground
-    
+
     /// 闭包内修改变量的值
     /*
      使用var声明变量
@@ -269,6 +267,3 @@ func captureListForClosure() {
     // "Aby"
     // "Jack"
 }
-
-
-

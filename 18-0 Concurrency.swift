@@ -153,15 +153,13 @@ func testGroupTask() async {
 }
 
 /// 任务取消
-/**
- Swift 中的并发使用合作取消模型。每个任务都会在执行中合适的时间点检查自己是否被取消了，并且会用任何合适的方式来响应取消操作。这些方式会根据你所执行的工作分为以下几种：
- - 抛出如 CancellationError 这样的错误
- - 返回 nil 或者空的集合
- - 返回完成一半的工作
-
- 如果想检查任务是否被取消，既可以使用 Task.checkCancellation()（如果任务取消会返回 CancellationError），也可以使用 Task.isCancelled 来判断，继而在代码中对取消进行相应的处理。比如，一个从图库中下载图片的任务需要删除下载到一半的文件并且关闭连接。
- 如果想手动执行扩散取消，调用 Task.cancel()。
- */
+/// Swift 中的并发使用合作取消模型。每个任务都会在执行中合适的时间点检查自己是否被取消了，并且会用任何合适的方式来响应取消操作。这些方式会根据你所执行的工作分为以下几种：
+/// - 抛出如 CancellationError 这样的错误
+/// - 返回 nil 或者空的集合
+/// - 返回完成一半的工作
+///
+/// 如果想检查任务是否被取消，既可以使用 Task.checkCancellation()（如果任务取消会返回 CancellationError），也可以使用 Task.isCancelled 来判断，继而在代码中对取消进行相应的处理。比如，一个从图库中下载图片的任务需要删除下载到一半的文件并且关闭连接。
+/// 如果想手动执行扩散取消，调用 Task.cancel()。
 let photos = await withTaskGroup(of: Optional<Data>.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
@@ -171,7 +169,6 @@ let photos = await withTaskGroup(of: Optional<Data>.self) { group in
         }
         guard added else { break }
     }
-
 
     var results: [Data] = []
     for await photo in group {
@@ -195,12 +192,12 @@ let task = await Task.withTaskCancellationHandler {
 // ... 一段时间之后 ...
 task.cancel()  // 输出 "Canceled!"
 
-
 /// Actors: 共享变量
 // 你可以使用任务来将自己的程序分割为孤立、并发的部分。
 // 任务间相互孤立，这也使得它们能够安全地同时运行。但有时你需要在任务间共享信息。
 // Actors便能够帮助你安全地在并发代码间分享信息。
 // actor 也是一个引用类型，不同于类的是，actor 在同一时间只允许一个任务访问它的可变状态，这使得多个任务中的代码与一个 actor 交互时更加安全。比如，下面是一个记录温度的 actor：
+// Task: https://developer.apple.com/documentation/swift/task
 actor TemperatureLogger {
     let label: String
     var measurements: [Int]
@@ -273,3 +270,13 @@ func testSendable() async {
     let reading = TemperatureReading(measurement: 45)
     await logger.addReading(from: reading)
 }
+
+// 显式声明一个类型为不可发送类型
+// FileDescriptor 隐式遵循 Sendable 协议
+struct FileDescriptor {
+    let rawValue: Int
+}
+
+// 显式声明一个类型为不可发送类型
+@available(*, unavailable)
+extension FileDescriptor: Sendable {}

@@ -8,6 +8,8 @@
 
 import Foundation
 
+// Swift 提供了两种隐藏值类型细节的方法：不透明类型（Opaque Type）和封装协议类型（Boxed Protocol Type）。在隔离模块和调用模块的代码上，隐藏类型信息是有用的，因为这样返回值的底层类型可以保持私有。
+
 /// 不透明类型
 // 返回 `some protocol`
 
@@ -18,7 +20,7 @@ struct Square: ShapeX {
     var size: Int
     func draw() -> String {
         let line = String(repeating: "*", count: size)
-        let result = Array<String>(repeating: line, count: size)
+        let result = [String](repeating: line, count: size)
         return result.joined(separator: "\n")
     }
 }
@@ -58,7 +60,7 @@ func makeTrapezoid() -> some ShapeX {
     return trapezoid
 }
 
-func testOpaqueTypes(){
+func testOpaqueTypes() {
     let trapezoid = makeTrapezoid()
     print(trapezoid.draw())
 }
@@ -75,8 +77,23 @@ func join<T: ShapeX, U: ShapeX>(_ top: T, _ bottom: U) -> some ShapeX {
 // 并不会影响在返回的不透明类型中使用泛型
 // 无论 T 是什么，返回值始终还是同样的底层类型 [T]， 所以这符合不透明返回类型始终唯一的要求。
 func `repeat`<T: ShapeX>(shape: T, count: Int) -> some Collection {
-    return Array<T>(repeating: shape, count: count)
+    return [T](repeating: shape, count: count)
 }
+
+/// 封装协议类型
+// any ShapeX 表示任何遵循 ShapeX 协议的类型, 且类型可以不同
+// some ShapeX 表示任何遵循 ShapeX 协议的类型, 且类型必须相同
+struct VerticalShapes: ShapeX {
+    var shapes: [any ShapeX]
+    func draw() -> String {
+        return shapes.map { $0.draw() }.joined(separator: "\n\n")
+    }
+}
+
+let largeTriangle = Triangle(size: 5)
+let largeSquare = Square(size: 5)
+let vertical = VerticalShapes(shapes: [largeTriangle, largeSquare])
+print(vertical.draw())
 
 /// 与协议的区别
 /**
@@ -95,10 +112,8 @@ func protoFlip<T: ShapeX>(_ shape: T) -> ShapeX {
     return FlippedShape(shape: shape)
 }
 
-/**
- 最直接的问题在于，Shape 协议中并没有包含对 == 运算符的声明。如果你尝试加上这个声明，那么你会遇到新的问题，就是 == 运算符需要知道左右两侧参数的类型。
- 这类运算符通常会使用 Self 类型作为参数，用来匹配符合协议的具体类型，但是由于将协议当成类型使用时会发生类型擦除，所以并不能给协议加上对 Self 的实现要求。
- */
+/// 最直接的问题在于，Shape 协议中并没有包含对 == 运算符的声明。如果你尝试加上这个声明，那么你会遇到新的问题，就是 == 运算符需要知道左右两侧参数的类型。
+/// 这类运算符通常会使用 Self 类型作为参数，用来匹配符合协议的具体类型，但是由于将协议当成类型使用时会发生类型擦除，所以并不能给协议加上对 Self 的实现要求。
 func testProtoResp() {
     /*
     let protoFlippedTriangle = protoFlip(smallTriangle)
@@ -113,7 +128,7 @@ protocol ContainerY {
     var count: Int { get }
     subscript(i: Int) -> Item { get }
 }
-extension Array: ContainerY { }
+extension Array: ContainerY {}
 
 /*
  // 错误：有关联类型的协议不能作为返回类型。
@@ -139,7 +154,7 @@ func testOpaqueResp() {
     let twelve = opaqueContainer[0]
     print(type(of: twelve))
     // 输出 "Int"
-    
+
     // twelve 的类型可以被推断出为 Int， 这说明了类型推断适用于不透明类型
     /// 类型推断 依然有效
 }
