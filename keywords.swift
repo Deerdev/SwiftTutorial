@@ -99,3 +99,38 @@ func platformSpecificFeature() {
 func oldFunction() {
     // Implementation
 }
+
+
+
+/// @_spi
+// 用于分组接口  你可以给不同的 API 打上不同的 SPI 名，按功能、使用场景划分
+// 模块 MyFramework 中
+@_spi(Internal)
+public func _internalUtility() { }
+
+@_spi(ForTesting)
+public class TestMock {}
+
+@_spi(FeatureX)
+public struct FeatureXHelper {}
+
+// 然后其他模块中使用对应的 @_spi 导入才能使用
+
+@_spi(Internal) import MyFramework
+_internalUtility() // ✅ OK
+
+@_spi(ForTesting) import MyFramework
+let mock = TestMock() // ✅ OK
+
+@_spi(FeatureX) import MyFramework
+let x = FeatureXHelper() // ✅ OK
+
+// 在 Swift Package 中使用 SPI，你还可以配合 library SPIGroup 和 target 在 Package.swift 中声明 SPI 可见性，例如：
+/*
+.library(
+    name: "MyLibrary",
+    type: .dynamic,
+    targets: ["MyLibraryTarget"],
+    spi: ["Internal", "ForTesting"]
+)
+*/
